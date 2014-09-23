@@ -258,18 +258,6 @@ $endif$
 \postdate{\end{flushleft}\@reviewinfoinsert}
 
 %% Measure and space each name & affiliation using larger of the 2 lengths
-$if(author)$
-% author metadata is string...
-\authorblock{%
-             \newlength{\namelength}
-             \newlength{\affilength}
-             \settowidth{\namelength}{\myauthor}
-             \settowidth{\affilength}{\emph{\myaffiliation}}
-             \ifdimgreater{\namelength}{\affilength}{\myauthor}{\emph{\myaffiliation}}
-             \quad \= \kill
-             \myauthor\\
-             \emph{\myaffiliation}}
-$else$
 % author metadata is list...
 \authorblock{%
              \newlength{\namelength}
@@ -281,7 +269,6 @@ $else$
              \quad \= $endfor$ \kill
              $for(author)$$author.name$$sep$ \> $endfor$\\
              $for(author)$\emph{$author.affiliation$}$sep$ \> $endfor$}
-$endif$
 
 %% default settings for \title{} and \published{}
 \title{Untitled document}
