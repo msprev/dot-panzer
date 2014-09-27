@@ -76,8 +76,8 @@ class FileInfo(object):
 
 def log(level, message):
     """docstring for log"""
-    outgoing = [ { 'error_msg': { 'level': level, 'message': message } } ]
-    # outgoing = { 'level': level, 'message': message }
+    # outgoing = [ { 'error_msg': { 'level': level, 'message': message } } ]
+    outgoing = { 'level': level, 'message': message }
     outgoing_json = json.dumps(outgoing) + '\n'
     outgoing_bytes = outgoing_json.encode(ENCODING)
     sys.stderr.buffer.write(outgoing_bytes)
