@@ -38,11 +38,26 @@ def run_latexmk(filepath):
     before_pdf_ = -1
     if os.path.exists(pdf_mangled.filename()):
         before_pdf_ = os.path.getmtime(pdf_mangled.filename())
-
+    my_env = os.environ.copy()
+    my_env['LC_MESSAGES'] = 'en_GB.UTF-8'
+    my_env['LANG']='en_GB.UTF-8'
+    my_env['LC_CTYPE']='en_GB.UTF-8'
+    my_env['LC_NUMERIC']='en_GB.UTF-8'
+    my_env['LC_TIME']='en_GB.UTF-8'
+    my_env['LC_COLLATE']='en_GB.UTF-8'
+    my_env['LC_MONETARY']='en_GB.UTF-8'
+    my_env['LC_MESSAGES']='en_GB.UTF-8'
+    my_env['LC_PAPER']='en_GB.UTF-8'
+    my_env['LC_NAME']='en_GB.UTF-8'
+    my_env['LC_ADDRESS']='en_GB.UTF-8'
+    my_env['LC_TELEPHONE']='en_GB.UTF-8'
+    my_env['LC_MEASUREMENT']='en_GB.UTF-8'
+    my_env['LC_IDENTIFICATION']='en_GB.UTF-8'
     try:
         p = subprocess.Popen(command,
                              stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+                             stderr=subprocess.PIPE,
+                             env=my_env)
         stdout_bytes, stderr_bytes = p.communicate()
         if stdout_bytes:
             stdout = stdout_bytes.decode(panzertools.ENCODING, errors='ignore')
