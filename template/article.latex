@@ -313,15 +313,9 @@ $endif$
 
   %% \@emailbox: email info layout as set by \email{} and \myemail
   \newsavebox{\@emailbox}
-  $if(author)$$if(email)$
-  \savebox{\@emailbox}{\parbox[t]{.3\textwidth}{%
-    \footnotesize \strut \hfill \texttt{\href{mailto:$email$}{$email$}}}%
-  }
-  $endif$$else$
   \savebox{\@emailbox}{\parbox[t]{.3\textwidth}{%
     \footnotesize $for(author)$\strut \hfill \texttt{\href{mailto:$author.email$}{$author.email$}}\\ $endfor$}%
   }
-  $endif$
 
   %% \@publicationbox: publication info layout as set by \published{}
   \newsavebox{\@publicationbox}
