@@ -426,6 +426,10 @@ $endif$
 
 $body$
 
+$if(acknowledgements)$
+\section*{Acknowledgements}
+$acknowledgements$
+$endif$
 
 $if(natbib)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
