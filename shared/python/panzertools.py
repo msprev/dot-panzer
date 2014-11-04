@@ -88,5 +88,5 @@ def read_options():
     stdin_bytes = sys.stdin.buffer.read()
     stdin = stdin_bytes.decode(ENCODING)
     message_in = json.loads(stdin)
-    options = message_in[0]['cli_options']
+    options = message_in[0]['options']
     return options
