@@ -63,12 +63,12 @@ Letter:
 
 CV:
     parent :
-        - Base
+        - Notes
     latex:
-        template: notes.latex
         metadata:
-            fontsize: 11pt
-            headings: sans-serif
+            wide_margin: false
+            include-before:
+                - \raggedright
 
 MSWord:
     parent :
@@ -76,5 +76,5 @@ MSWord:
     latex:
         template: notes.latex
         metadata:
-            fontsize: 12pt
+            fontsize: 11pt
             headings: sans-serif
