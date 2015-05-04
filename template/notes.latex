@@ -1,8 +1,14 @@
-\documentclass[$if(papersize)$$papersize$$else$a4paper$endif$,$if(fontsize)$$fontsize$$else$11pt$endif$]{article}
-\usepackage{fixltx2e}
+\documentclass[$fontsize$,$lang$,$papersize$,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+
+\usepackage{fixltx2e} % provides \textsubscript
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-$if(wide_margin)$
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+$if(killtrees)$
 $else$
 \usepackage[a4paper]{geometry}
 \geometry{
@@ -10,18 +16,23 @@ $else$
   bottom=3.5cm
  }
 $endif$
-\usepackage[opticals,fullfamily,mathlf,minionint,footnotefigures]{MinionPro}
-$if(sans_headings)$
-\usepackage[medfamily]{MyriadPro}
+% Use MinionPro font if available, otherwise use lmodern
+\IfFileExists{MinionPro.sty}{%
+    \usepackage[opticals,
+                fullfamily,
+                mathlf,
+                minionint,
+                footnotefigures]{MinionPro}}{\usepackage{lmodern}}
+$if(sans-style)$
+\IfFileExists{MyriadPro.sty}{%
+    \usepackage[medfamily]{MyriadPro}}{\usepackage{lmodern}}
 $endif$
-\usepackage[pagestyles$if(compact_headings)$,compact$endif$]{titlesec}
-\usepackage[scaled=0.85]{inconsolata}
-\usepackage{booktabs}
+\IfFileExists{inconsolata.sty}{\usepackage[scaled=0.85]{inconsolata}}{}
 \usepackage{xcolor}
 \usepackage{enumitem}
-\usepackage{gitinfo}
-\usepackage[british,orig,cleanlook]{isodate}
-\usepackage[british]{babel}
+\usepackage[pagestyles$if(savetrees)$,compact$endif$]{titlesec}
+\usepackage[$lang$,orig,cleanlook]{isodate}
+\usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage[babel,verbose=silent]{microtype}
 
@@ -44,19 +55,87 @@ $if(natbib)$
             sortcites,
             backend=biber]{biblatex-chicago}
 $if(biblio-files)$
-\addbibresource{$biblio-files$.bib}
+\addbibresource{$biblio-files$}
 $endif$
 \setlength\bibitemsep{6pt}
 \defbibheading{bibliography}[\refname]{\section*{#1} \sectionmark{#1}}
 \defbibheading{references}[\refname]{\section*{#1} \sectionmark{#1}}
 $endif$
 
-%% Git date and commit hash: print if set, otherwise do nothing
-\ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0
-    \def\gitstamp{\relax}
-\else
-	\def\gitstamp{\flushright{\scriptsize \texttt{\gitAbbrevHash\ on \gitAuthorDate}}}
-\fi
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+
+%% Dark purple for hyperlinks
+\definecolor{purple_link}{RGB}{76, 64, 133}
+
+%% breaklinks: allow links to break over lines
+%% bookmarks: a set of Acrobat bookmarks are written, in a manner similar to the table of contents, requiring two passes of LATEX
+%% unicode: unicode encoded PDF strings
+%% bookmarksnumbered: if bookmarks are created, include section numbers
+%% pdfborder: the style of box around links; defaults to a box with lines of 1pt thickness, but the colorlinks option resets it to produce no border.
+%% pdftex: sets up hyperref for use with the pdftex program.
+\usepackage[breaklinks = true,
+            bookmarks  = true,
+            colorlinks = true,
+            citecolor  = $if(citecolor)$$citecolor$$else$purple_link$endif$,
+            urlcolor   = $if(urlcolor)$$urlcolor$$else$purple_link$endif$,
+            linkcolor  = $if(linkcolor)$$linkcolor$$else$purple_link$endif$,
+            unicode    = true,       %% unicode breaks when used with xetex
+     bookmarksnumbered = true,
+            pdfborder={0 0 0},
+            pdftex]{hyperref}
+\usepackage{ellipsis}                %% must be loaded after hyperref
+
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+%% Description labels: bold, small caps, and enforced lowercase
+\renewcommand{\descriptionlabel}[1]{\hspace*{\labelsep}\textsc{\textbf{\MakeLowercase{#1}}}}
+
+% ---------------------------------------------------------------
+% Now for the Notes class...
+% ---------------------------------------------------------------
+
+% ticks for yes and cross for no
+\newcommand{\tickYes}{\ensuremath{\checkmark}}
+\newcommand{\tickNo}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{2713}{\tickYes}
+\DeclareUnicodeCharacter{2717}{\tickNo}
 
 % %% Right footer of first page: email address
 % \renewpagestyle{empty}{
@@ -64,11 +143,13 @@ $endif$
 % }
 
 %% Subsection title format: small bold sans, no spacing
-$if(sans_headings)$
+$if(sans-style)$
 \titleformat{\section}
   {\sffamily\large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}
   {\sffamily\bfseries\normalsize}{}{0em}{}
+\titleformat{\subsubsection}
+  {\bfseries\normalsize}{}{0em}{}
 $else$
 \titleformat{\section}
   {\normalfont\large\fontseries{sb}\selectfont}{\thesection}{1em}{}
@@ -82,32 +163,9 @@ $endif$
 %% Footnotes: stay on the same page
 \interfootnotelinepenalty=10000
 
-%% Dark purple for hyperlinks
-\definecolor{purple_link}{RGB}{76, 64, 133}
-
-\usepackage[
-  unicode    = true,
-  breaklinks = true,
-  bookmarks  = true,
-  pdfauthor  = {$author-meta$},
-  pdftitle   = {$title-meta$},
-  colorlinks = true,
-  citecolor  = purple_link,
-  linkcolor  = purple_link,
-  urlcolor   = purple_link]{hyperref}
-\usepackage{ellipsis}      %% must be loaded after hyperref
-
-$if(links-as-notes)$
-% Make links footnotes instead of hotlinks:
-\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
-$endif$
-
-%% Description labels: bold, small caps, and enforced lowercase
-\renewcommand{\descriptionlabel}[1]{\hspace*{\labelsep}\textsc{\textbf{\MakeLowercase{#1}}}}
-
 %% Title in bold sans. Code taken from savetrees.
 \makeatletter
-$if(sans_headings)$
+$if(sans-style)$
 \def\@maketitle{%
   \newpage
   \null
@@ -115,7 +173,7 @@ $if(sans_headings)$
     {\Large\sffamily\bfseries\@title\par}
     $if(author)$
     \vskip 0.3\baselineskip
-    \@author $if(email)$ \hphantom{ } \enspace | \enspace \texttt{\href{mailto:$email$}{$email$}}$endif$
+    \@author $if(author.email)$ \hphantom{ } \enspace | \enspace \texttt{\href{mailto:$author.email$}{$author.email$}}$endif$
     $endif$
     $if(gitdate)$
         \hfill \@date
@@ -164,40 +222,8 @@ $endif$
 % \def\signedURL #1{{\signed{[\url{#1}]}  \vspace{0.5em}}}
 \def\signedURL #1{{\signed{[\url{#1}]}}}
 
-$if(tables)$
-\usepackage{longtable}
-$endif$
-
-$if(listings)$
-\usepackage{listings}
-$endif$
-$if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
-$endif$
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
-$endif$
-$if(graphics)$
-\usepackage{graphicx}
-% Redefine \includegraphics so that, unless explicit options are
-% given, the image width will not exceed the width of the page.
-% Images get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
-\makeatletter
-\def\ScaleIfNeeded{%
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-\let\Oldincludegraphics\includegraphics
-{%
- \catcode`\@=11\relax%
- \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
-}%
-$endif$
+% use small dot for bulleted lists
+\renewcommand\labelitemi{{\boldmath\ensuremath{\cdot}}}
 
 %% Typesetting defaults for rest of document
 %% Paragraphs: don't indent first line
@@ -205,46 +231,33 @@ $endif$
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 
-$if(numbersections)$
-\setcounter{secnumdepth}{5}
-$else$
-\setcounter{secnumdepth}{0}
-$endif$
-$if(verbatim-in-note)$
-\VerbatimFootnotes % allows verbatim text in footnotes
-$endif$
-
-$for(header-includes)$
-$header-includes$
-$endfor$
+% ---------------------------------------------------------------
+% ... End of Notes class
+% ---------------------------------------------------------------
 
 $if(title)$
 \title{$title$$if(subtitle)$\hfill \small $subtitle$$endif$}
 $endif$
 $if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
+\author{$for(author)$$author.name$$sep$ \and $endfor$}
 $endif$
-
-%% Date
-
-$if(gitdate)$
-    \ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0
-      \date{Date not found from git}
-    \else
-      \date{\printdate{\gitAuthorDate}}
-    \fi
+$if(date)$
+\date{$date$}
 $else$
-    $if(date)$
-    \date{$date$}
-    $else$
-    \date{\today}
-    $endif$
+\date{\today}
 $endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 \begin{document}
-
 $if(title)$
 \maketitle
+$endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
 $endif$
 
 \thispagestyle{empty}
@@ -254,7 +267,25 @@ $include-before$
 
 $endfor$
 
+$if(toc)$
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
 $body$
+
+$if(acknowledgements)$
+\section*{Acknowledgements}
+$acknowledgements$
+$endif$
 
 $if(natbib)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
@@ -262,7 +293,6 @@ $endif$
 
 $for(include-after)$
 $include-after$
+
 $endfor$
-
-
 \end{document}

@@ -8,61 +8,85 @@ Base:
             numbersections: true
     latex:
         metadata:
-            lang      : british
-            papersize : a4paper
+            lang: british
+            papersize: a4paper
+            biblio-files: /Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib
         preflight:
             - run: tmp_out.py
-        postflight :
-            - run : latexmk.py
-            - run : pplatex.py
-            - run : open_pdf.py
-        cleanup :
-            - run : tmp_back.py
-            - run : rmlatex.py
+        postflight:
+            - run: latexmk.py
+            - run: open_pdf.py
+        cleanup:
+            - run: tmp_back.py
+            - run: rmlatex.py
+
+Plain:
+    parent:
+        - Base
+    latex:
+        template:
+        metadata:
+            geometry: a4paper
+        filter:
+            - run: mkmultiauthor.py
 
 Notes:
-    parent :
+    parent:
         - Base
     latex:
-        template:     notes.latex
+        template: notes.latex
         metadata:
-            fontsize : 11pt
-            headings : sans-serif
+            fontsize: 11pt
+
+NotesSans:
+    parent:
+        - Notes
+    latex:
+        template: notes.latex
+        metadata:
+            sans-style: true
 
 Mumford:
-    parent :
+    parent:
         - Base
     latex:
-        template : mumford.latex
-        metadata :
+        template: mumford.latex
+        metadata:
             fontsize: 11pt
 
 Article:
-    parent :
+    parent:
         - Base
+    all:
+        metadata:
+            title: Untitled document
+            author:
+                - name: No author
+                  affiliation: No affiliation
+                  email: no@email
+            published: "*Draft only. Please do not cite without permission.*"
     latex:
-        template : article.latex
-        metadata :
-            fontsize     : 12pt
-            title        : Untitled document
-            author       : No author
-            affiliation  : No affiliation
-            email        : no@email
-            published    : "*Draft only. Please do not cite without permission.*"
-            biblio-files : /Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs
-            bibliography : /Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib
-        # filter :
-        #     - run: pandoc-citeproc
+        template: article.latex
+        metadata:
+            fontsize: 12pt
+
+
+Draft:
+    parent: Article
+    latex:
+        metadata:
+            savetrees: true
+            fontsize: 11pt
 
 Letter:
-    parent :
+    parent:
         - Base
     latex:
         template: letter-UoE.latex
 
 
 CV:
-    parent :
+    parent:
         - Notes
     latex:
         metadata:
@@ -71,7 +95,7 @@ CV:
                 - \raggedright
 
 MSWord:
-    parent :
+    parent:
         - Base
     latex:
         template: notes.latex

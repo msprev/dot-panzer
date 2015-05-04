@@ -1,53 +1,21 @@
-% Formatting settings
-$if(lang)$
-\def\mylocalisation{$lang$}
-$else$
-\def\mylocalisation{british}
-$endif$
-$if(papersize)$
-\def\mypapersize{$papersize$}
-$else$
-\def\mypapersize{a4paper}
-$endif$
-$if(fontsize)$
-\def\myfontsize{$fontsize$}
-$else$
-\def\myfontsize{12pt}
-$endif$
+\documentclass[$fontsize$,$lang$,$papersize$,$for(classoption)$$classoption$$sep$,$endfor$]{article}
 
-% Author info
-$if(author)$
-\def\myauthor{$author$}
-$else$
-\def\myauthor{No author}
-$endif$
-$if(affiliation)$
-\def\myaffiliation{$affiliation$}
-$else$
-\def\myaffiliation{No affiliation}
-$endif$
-
-\documentclass[\myfontsize,\mylocalisation,\mypapersize,$for(classoption)$$classoption$$sep$,$endfor$]{article}
-
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e} % provides \textsubscript
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\usepackage[utf8x]{inputenc}
 $if(euro)$
   \usepackage{eurosym}
 $endif$
-$if(margins)$
-% if 'margins' key has value 'narrow':
-\ifnum\pdfstrcmp{$margins$}{narrow}=0
-    \usepackage{geometry}
-    \geometry{
-      top=2.5cm,
-      bottom=3.5cm,
-      headheight=3ex,
-      headsep=3ex
-    }
-\fi
+$if(savetrees)$
+\usepackage{geometry}
+\geometry{
+    top=2.5cm,
+    bottom=3.5cm,
+    headheight=3ex,
+    headsep=3ex
+}
 $endif$
 % Use MinionPro font if available, otherwise use lmodern
 \IfFileExists{MinionPro.sty}{%
@@ -62,16 +30,11 @@ $endif$
 \usepackage{calc}
 \usepackage{enumitem}
 \usepackage{titling}
-$if(date)$
-\ifnum\pdfstrcmp{$date$}{git}=0
-    \usepackage{gitinfo}
-\fi
-$endif$
 \usepackage[small,pagestyles]{titlesec}
-\usepackage[\mylocalisation,orig,cleanlook]{isodate}
-\usepackage[\mylocalisation]{babel}
+\usepackage[$lang$,orig,cleanlook]{isodate}
+\usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
-\usepackage[babel]{microtype}
+\usepackage[babel,verbose=silent]{microtype}
 
 $if(natbib)$
 \usepackage[useprefix,
@@ -80,16 +43,13 @@ $if(natbib)$
             sortcites,
             backend=biber]{biblatex-chicago}
 $if(biblio-files)$
-\addbibresource{$biblio-files$.bib}
+\addbibresource{$biblio-files$}
 $endif$
 \setlength\bibitemsep{6pt}
 \defbibheading{bibliography}[\refname]{\section*{#1} \sectionmark{#1}}
 \defbibheading{references}[\refname]{\section*{#1} \sectionmark{#1}}
 $endif$
 
-$if(listings)$
-\usepackage{listings}
-$endif$
 $if(lhs)$
 \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
 $endif$
@@ -100,29 +60,18 @@ $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
 $if(tables)$
-\usepackage{longtable}
-\usepackage{booktabs}
+\usepackage{longtable,booktabs}
 $endif$
 $if(graphics)$
 \usepackage{graphicx}
-% Redefine \includegraphics so that, unless explicit options are
-% given, the image width will not exceed the width of the page.
-% Images get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
 \makeatletter
-\def\ScaleIfNeeded{%
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 \makeatother
-\let\Oldincludegraphics\includegraphics
-{%
- \catcode`\@=11\relax%
- \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
-}%
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
 
 %% Dark purple colour for links
@@ -275,22 +224,11 @@ $endif$
 \published{\emph{Draft only. Please do not cite without permission.}}
 
 %% Date
-%% \gitAuthorDate set: set that as the date
-%% Otherwise: set '(None)' as the date
-%% This is overridden if \date{...} set otherwise in document
-\ifnum\pdfstrcmp{$date$}{git}=0
-    \ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0
-      \date{Date not found from git}
-    \else
-      \date{\printdate{\gitAuthorDate}}
-    \fi
-\else
-    $if(date)$
-        \date{$date$}
-    $else$
-        \date{\today}
-    $endif$
-\fi
+$if(date)$
+    \date{$date$}
+$else$
+    \date{\today}
+$endif$
 
 %% Abstract: minimal quote environment
 \renewenvironment{abstract}{\begin{nsquote}\footnotesize}{\end{nsquote}}
@@ -359,18 +297,6 @@ $endif$
   \setlength{\parskip}{6pt plus 2pt minus 1pt}
 }
 
-%% Inserted before \end{document}
-\AtEndDocument{
-%% Git date and hash: print if set, otherwise print nothing
-\ifnum\pdfstrcmp{$date$}{git}=0
-    \ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0
-      \relax
-    \else
-      \flushright{\sffamily \scriptsize \gitAbbrevHash\ on \gitAuthorDate}
-    \fi
-\fi
-}
-
 \makeatother
 
 % ---------------------------------------------------------------
@@ -406,6 +332,12 @@ $endif$
 
 \begin{document}
 
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
 $for(include-before)$
 $include-before$
 
@@ -418,12 +350,12 @@ $if(toc)$
 }
 $endif$
 
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
+$if(lot)$
+\listoftables
 $endif$
-
+$if(lof)$
+\listoffigures
+$endif$
 $body$
 
 $if(acknowledgements)$
