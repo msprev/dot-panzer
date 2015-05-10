@@ -1,11 +1,14 @@
-#########################
-#  Base for style defs  #
-#########################
+########################################################################
+#                     Base - parent of all styles                      #
+########################################################################
 
 Base:
     all:
         metadata:
             numbersections: true
+            bibliography: /Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib
+        filter:
+            - run: smallcaps.py
     latex:
         metadata:
             lang: british
@@ -20,15 +23,47 @@ Base:
             - run: tmp_back.py
             - run: rmlatex.py
 
-Plain:
+########################################################################
+#                               Article                                #
+########################################################################
+
+Article:
     parent:
         - Base
-    latex:
-        template:
+    all:
         metadata:
-            geometry: a4paper
+            title: "Untitled document"
+            author:
+                - name: "No author"
+                  affiliation: "No affiliation"
+                  email: "no@email"
+            published: "*Draft only. Please do not cite without permission.*"
+    latex:
+        template: article.latex
+        metadata:
+            fontsize: 12pt
+    html:
+        template: article.html
+        metadata:
+            css: /Users/msprevak/Dropbox/msprevak/dot-panzer/template/Momento-pandoc.css
         filter:
-            - run: mkmultiauthor.py
+            - run: addrefline.py
+            - run: pandoc-citeproc
+    docx:
+        filter:
+            - run: addrefline.py
+            - run: pandoc-citeproc
+
+Draft:
+    parent: Article
+    latex:
+        metadata:
+            savetrees: true
+            fontsize: 11pt
+
+########################################################################
+#                                Notes                                 #
+########################################################################
 
 Notes:
     parent:
@@ -37,6 +72,10 @@ Notes:
         template: notes.latex
         metadata:
             fontsize: 11pt
+    html:
+        template: article.html
+        metadata:
+            css: "/Users/msprevak/Dropbox/msprevak/Marked/Custom CSS/Topi.css"
 
 NotesSans:
     parent:
@@ -46,6 +85,26 @@ NotesSans:
         metadata:
             sans-style: true
 
+########################################################################
+#                                  CV                                  #
+########################################################################
+
+CV:
+    parent:
+        - Notes
+    latex:
+        metadata:
+            savetrees: true
+            fontsize: 10pt
+            include-before:
+                - \raggedright
+        postflight:
+            - kill: open_pdf.py
+
+########################################################################
+#                               Mumford                                #
+########################################################################
+
 Mumford:
     parent:
         - Base
@@ -54,29 +113,9 @@ Mumford:
         metadata:
             fontsize: 11pt
 
-Article:
-    parent:
-        - Base
-    all:
-        metadata:
-            title: Untitled document
-            author:
-                - name: No author
-                  affiliation: No affiliation
-                  email: no@email
-            published: "*Draft only. Please do not cite without permission.*"
-    latex:
-        template: article.latex
-        metadata:
-            fontsize: 12pt
-
-
-Draft:
-    parent: Article
-    latex:
-        metadata:
-            savetrees: true
-            fontsize: 11pt
+########################################################################
+#                               Letter                                 #
+########################################################################
 
 Letter:
     parent:
@@ -84,21 +123,18 @@ Letter:
     latex:
         template: letter-UoE.latex
 
+########################################################################
+#                Plain, with pandoc's default template                 #
+########################################################################
 
-CV:
-    parent:
-        - Notes
-    latex:
-        metadata:
-            wide_margin: false
-            include-before:
-                - \raggedright
-
-MSWord:
+Plain:
     parent:
         - Base
+    all:
+        template:
+        filter:
+            - run: name2auth.py
     latex:
-        template: notes.latex
         metadata:
-            fontsize: 11pt
-            headings: sans-serif
+            geometry: a4paper
+
