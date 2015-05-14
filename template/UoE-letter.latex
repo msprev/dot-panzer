@@ -22,7 +22,7 @@ $if(links-as-notes)$
 $endif$
 
 %% \signed{...}: flush right, newline when necessary
-%% usage: \signed{\citep{Lewis00}} 
+%% usage: \signed{\citep{Lewis00}}
 \def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
   \hbox{}\nobreak\hfil#1%
   \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
@@ -83,18 +83,18 @@ $endfor$
 \fax{650 3660}
 \email{mark.sprevak@ed.ac.uk}
 \href{http://sites.google.com/site/msprevak}
-\signature{$if(letter.hand-sign)$$else$\vspace{-4em}$endif$ $author$}
+\signature{$if(signed)$\vspace{-4em}$endif$ $author.name$}
 
 \begin{letter}{}
 
 \opening{
 $if(title)$
 \begin{center}
-    \textbf{$title$} 
+    \textbf{$title$}
 \end{center}
 $endif$
-$if(letter.opening)$
-$letter.opening$
+$if(opening)$
+$opening$
 $endif$
 }
 
@@ -109,18 +109,16 @@ $include-after$
 $endfor$
 
 \closing{
-$if(letter.closing)$
-$letter.closing$
-$else$
-Yours sincerely,
+$if(closing)$
+$closing$
 $endif$
-$if(letter.hand-sign)$$else$$if(letter.signature)$
-\includegraphics{$letter.signature$}
-$else$\includegraphics{/Users/msprevak/Documents/Correspondence/Signature.png}$endif$$endif$}
+$if(signed)$$if(signature)$
+\includegraphics{$signature$}
+$endif$$endif$}
 
-$if(letter.cc)$\cc{$letter.cc$}$endif$ 
-$if(letter.ps)$\ps{$letter.ps$}$endif$ 
-$if(letter.encl)$\encl{$letter.encl$}$endif$ 
+$if(cc)$\cc{$cc$}$endif$
+$if(ps)$\ps{$ps$}$endif$
+$if(encl)$\encl{$encl$}$endif$
 
 \end{letter}
 \end{document}

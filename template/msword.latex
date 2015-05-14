@@ -3,7 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{txfonts}
-$if(Word.endnotes)$
+$if(endnotes)$
 \usepackage{endnotes}
 \let\footnote=\endnote
 $endif$
@@ -16,15 +16,15 @@ $endif$
 
 
 % Force footnotes to stay on the same page
-\interfootnotelinepenalty=10000 	
+\interfootnotelinepenalty=10000
 
-%% [natbib]: use natbib option for biblatex 
+%% [natbib]: use natbib option for biblatex
 $if(natbib)$
 \usepackage[useprefix,
             authordate,
             natbib,
             sortcites,
-            backend=biber]{biblatex-chicago}    
+            backend=biber]{biblatex-chicago}
 $if(biblio-files)$
 \addbibresource{$biblio-files$.bib}
 $endif$
@@ -84,9 +84,9 @@ $if(title)$
 $endif$
 
 $if(author)$
-$if(Word.anonymised)$
+$if(anonymous)$
 $else$
-\author{$for(author)$$author$$sep$ \and $endfor$ \vspace{-1em}}
+\author{$for(author)$$author.name$$sep$ \and $endfor$ \vspace{-1em}}
 $endif$
 $endif$
 
@@ -94,7 +94,7 @@ $if(date)$
 \date{$date$ \vspace{-1em}}
 $endif$
 
-$if(Word.anonymised)$
+$if(anonymous)$
 	% Remove the author and date fields and the space associated with them
 	% from the definition of maketitle!
 	\makeatletter
@@ -131,14 +131,9 @@ $for(include-after)$
 $include-after$
 $endfor$
 
-$if(Word.endnotes)$
-\newpage
-\begingroup
-\parindent 0pt
-\parskip 2ex
-\def\enotesize{\normalsize}
-\theendnotes
-\endgroup
+$if(endnotes)$
+\raggedright
+\noteshere
 $endif$
 
 \end{document}

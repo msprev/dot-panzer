@@ -320,7 +320,7 @@ $if(DOI)$
 \doi{$DOI$}
 $endif$
 
-$if(review.title)$
+$if(review)$
  \review{%
   $if(review.author)$\textsc{\lowercase{$review.author$}}$else$
   $if(review.editor)$\textsc{\lowercase{$review.editor$}} (\textsc{eds}.)$endif$$endif$,

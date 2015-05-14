@@ -8,7 +8,7 @@
 $if(euro)$
   \usepackage{eurosym}
 $endif$
-$if(killtrees)$
+$if(horiz-whitespace)$
 $else$
 \usepackage[a4paper]{geometry}
 \geometry{
@@ -30,7 +30,7 @@ $endif$
 \IfFileExists{inconsolata.sty}{\usepackage[scaled=0.85]{inconsolata}}{}
 \usepackage{xcolor}
 \usepackage{enumitem}
-\usepackage[pagestyles$if(savetrees)$,compact$endif$]{titlesec}
+\usepackage[pagestyles$if(vert-whitespace)$$else$,compact$endif$]{titlesec}
 \usepackage[$lang$,orig,cleanlook]{isodate}
 \usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
@@ -175,11 +175,8 @@ $if(sans-style)$
     \vskip 0.3\baselineskip
     \@author $if(author.email)$ \hphantom{ } \enspace | \enspace \texttt{\href{mailto:$author.email$}{$author.email$}}$endif$
     $endif$
-    $if(gitdate)$
+    $if(date)$
         \hfill \@date
-    $else$$if(date)$
-        \hfill \@date
-        $endif$
     $endif$
   \par
 \vskip \baselineskip
@@ -197,13 +194,9 @@ $else$
     \@author
   \end{tabular}\par
    $endif$
-    $if(gitdate)$
+    $if(date)$
         \vskip 0.1\baselineskip
         \@date
-    $else$$if(date)$
-        \vskip 0.1\baselineskip
-        \@date
-        $endif$
     $endif$
 \end{center}%
 \par
@@ -254,6 +247,7 @@ $endfor$
 $if(title)$
 \maketitle
 $endif$
+$if(tabbing-digits)$\figureversion{tab,lf}$endif$
 $if(abstract)$
 \begin{abstract}
 $abstract$

@@ -32,12 +32,13 @@ Article:
         - Base
     all:
         metadata:
-            title: "Untitled document"
+            title: "Untitled"
             author:
                 - name: "No author"
                   affiliation: "No affiliation"
                   email: "no@email"
             published: "*Draft only. Please do not cite without permission.*"
+            doi: false
     latex:
         template: article.latex
         metadata:
@@ -53,6 +54,32 @@ Article:
         filter:
             - run: addrefline.py
             - run: pandoc-citeproc
+
+BookReview:
+    parent:
+        - Article
+    all:
+        metadata:
+            review:
+                title: "No title"
+                author: "No author"
+                editor: "No editor"
+                publisher: "No publisher"
+                address: "No address"
+                year: "No year"
+                pages: "No pages"
+                price: "No price"
+                ISBN: "No ISBN"
+
+Braindead:
+    parent:
+        - Article
+    latex:
+        template: msword.latex
+        metadata:
+            endnotes: false    # use endnotes rather than footnotes
+            anonymous: false   # don't include author info
+
 
 Draft:
     parent: Article
@@ -72,6 +99,10 @@ Notes:
         template: notes.latex
         metadata:
             fontsize: 11pt
+            vert-whitespace: true   # looser vertical spacing
+            horiz-whitespace: false # wider horizontal margins
+            tabbing-digits: false   # fixed-size digits
+            sans-style: false       # sans serif style
     html:
         template: article.html
         metadata:
@@ -94,10 +125,10 @@ CV:
         - Notes
     latex:
         metadata:
-            savetrees: true
+            vert-whitespace: false
             fontsize: 10pt
             include-before:
-                - \raggedright
+                - '\raggedright'
         postflight:
             - kill: open_pdf.py
 
@@ -120,11 +151,20 @@ Mumford:
 Letter:
     parent:
         - Base
+    all:
+        metadata:
+            opening: false
+            closing: "Yours sincerely,"
+            cc: false
+            ps: false
+            incl: false
+            signed: true            # sign using image below
+            signature: "/Users/msprevak/Documents/Correspondence/Signature.png"
     latex:
-        template: letter-UoE.latex
+        template: UoE-letter.latex
 
 ########################################################################
-#                Plain, with pandoc's default template                 #
+#                Plain, uses pandoc's default template                 #
 ########################################################################
 
 Plain:
