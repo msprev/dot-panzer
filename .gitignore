@@ -1,9 +1,0 @@
-*.pyc
-__pycache__/
-/dist/
-build/
-venv/
-/*.egg-info
-tests/
-.ropeproject/
-.gitignore
