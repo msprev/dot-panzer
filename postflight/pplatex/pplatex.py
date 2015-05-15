@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+run pplatex on the log of latexmk to get a pretty printed version of the log
+
+pplatex seems pretty unreliable, so this doesn't seem best strategy to pretty
+print log
+"""
 
 import os
 import re
@@ -54,7 +60,7 @@ def main():
         print_log(filepath)
     else:
         panzertools.log('INFO', 'not run')
-        
+
 
 
 # Standard boilerplate to call the main() function to begin

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+Remove latex source file generate by pandoc.
+
+Use this when we only care about the final pdf in the current directory, not
+the intermediate latex file (a copy of which is stored in .tmp anyway).
+"""
 
 import os
 import sys
@@ -16,7 +22,7 @@ def main():
         panzertools.log('INFO', 'removed "%s"' % filepath)
     else:
         panzertools.log('INFO', 'not run')
-        
+
 
 
 # Standard boilerplate to call the main() function to begin

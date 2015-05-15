@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Moves temporary files back from current directory to .tmp subdirectory
+"""
 
 import glob
 import os

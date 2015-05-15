@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+run latexmk on latex output file from pandoc
+"""
 
 import filecmp
 import os

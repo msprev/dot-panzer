@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+open pdf file produced by latexmk in Skim.app
+"""
 
 import os
 import subprocess
