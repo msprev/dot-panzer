@@ -1,4 +1,21 @@
 #!/usr/bin/env python3
+"""
+Transforms metadata:
+
+    author:
+        - name: Joe Bloggs
+        affiliation: Nowhere
+        - name: Jim Brown
+        affiliation: Somewhere
+
+-- to -->
+
+    author:
+        - Joe Bloggs
+        - Jim Brown
+
+The latter format is that assumed by pandoc's default templates. The former, I use in my own templates.
+"""
 
 import json
 import sys

@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Test filter -- dumps the ast, without changing it, as a json to stderr for printing by panzer
+"""
 
 import json
 import os

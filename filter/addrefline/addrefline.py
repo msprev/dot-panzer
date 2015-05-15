@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+Add extra section heading at end of document:
+
+    # References
+
+"""
 
 import json
 import sys

@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
 
 """
-reset the base header level for the document
+Reset the header level for the document
 
-- new base level is set by value passed as argv[2]
-- new base level values may be from 1 to 5
+- new base level is value passed in argv[2]
+- base level values may be from 1 to 5
+
+if 2 is passed then:
+
+# Section
+
+is transformed to -->
+
+## Section
+
 """
 
 import sys

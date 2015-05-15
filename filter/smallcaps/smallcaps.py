@@ -1,4 +1,19 @@
 #!/usr/bin/env python3
+"""
+Transforms all items listed in 'smallcaps:' metadata field to small caps.
+
+    smallcaps:
+        - ONE
+        - TWO
+
+transforms:
+
+    Lorem ONE ipsum dolor TWO sit amet
+
+to use small caps for ONE and TWO.
+
+Will transform anything in the list in the document delimited by whitespace or punctuation.
+"""
 
 import sys
 import os
