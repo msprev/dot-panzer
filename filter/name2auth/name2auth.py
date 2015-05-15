@@ -4,9 +4,9 @@ Transforms metadata:
 
     author:
         - name: Joe Bloggs
-        affiliation: Nowhere
+          affiliation: Nowhere
         - name: Jim Brown
-        affiliation: Somewhere
+          affiliation: Somewhere
 
 -- to -->
 
