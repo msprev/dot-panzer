@@ -6,14 +6,14 @@ Base:
     all:
         metadata:
             numbersections: true
-            bibliography: /Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib
+            bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
         filter:
             - run: smallcaps.py
     latex:
         metadata:
             lang: british
             papersize: a4paper
-            biblio-files: /Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib
+            biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
         preflight:
             - run: tmp_out.py
         postflight:
@@ -46,7 +46,7 @@ Article:
     html:
         template: article.html
         metadata:
-            css: /Users/msprevak/Dropbox/msprevak/dot-panzer/template/Momento-pandoc.css
+            css: "/Users/msprevak/.panzer/template/Momento-pandoc.css"
         filter:
             - run: addrefline.py
             - run: pandoc-citeproc
@@ -75,7 +75,7 @@ Braindead:
     parent:
         - Article
     latex:
-        template: msword.latex
+        template: braindead.latex
         metadata:
             endnotes: false    # use endnotes rather than footnotes
             anonymous: false   # don't include author info
@@ -106,7 +106,7 @@ Notes:
     html:
         template: article.html
         metadata:
-            css: "/Users/msprevak/Dropbox/msprevak/Marked/Custom CSS/Topi.css"
+            css: "/Users/msprevak/.panzer/template/Topi.css"
 
 NotesSans:
     parent:
