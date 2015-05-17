@@ -8,11 +8,11 @@ Reset the header level for the document
 
 if 2 is passed then:
 
-# Section
+    # Section
 
 is transformed to -->
 
-## Section
+    ## Section
 
 """
 

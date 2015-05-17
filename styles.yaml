@@ -126,6 +126,7 @@ CV:
     latex:
         metadata:
             vert-whitespace: false
+            horiz-whitespace: false
             fontsize: 10pt
             include-before:
                 - '\raggedright'
@@ -162,6 +163,8 @@ Letter:
             signature: "/Users/msprevak/Documents/Correspondence/Signature.png"
     latex:
         template: UoE-letter.latex
+        metadata:
+            fontsize: 11pt
 
 ########################################################################
 #                Plain, uses pandoc's default template                 #

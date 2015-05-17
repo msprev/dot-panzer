@@ -1,14 +1,58 @@
-\documentclass[LFCS,11pt]{infletr}
-\usepackage{fixltx2e}
+\documentclass[LFCS,$fontsize$]{infletr}
+
+\usepackage{fixltx2e} % provides \textsubscript
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
 \usepackage{url,txfonts}
-\usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage[british]{babel}
+\usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
+\usepackage[defaultlines=3,all]{nowidow}
 \usepackage[babel,verbose=silent]{microtype}
 \usepackage{ellipsis}      %% must be loaded after hyperref
+
+%% [natbib]: use natbib option for biblatex
+$if(natbib)$
+\usepackage[useprefix,
+            authordate,
+            natbib,
+            sortcites,
+            backend=biber]{biblatex-chicago}
+$if(biblio-files)$
+\addbibresource{$biblio-files$}
+$endif$
+\setlength\bibitemsep{6pt}
+\defbibheading{bibliography}[\refname]{\section*{#1} \sectionmark{#1}}
+\defbibheading{references}[\refname]{\section*{#1} \sectionmark{#1}}
+$endif$
+
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
 
 %% Text can stretch a little into margins to avoid bad line-breaks
 \setlength{\emergencystretch}{3em}
@@ -20,6 +64,19 @@ $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
 
 %% \signed{...}: flush right, newline when necessary
 %% usage: \signed{\citep{Lewis00}}
@@ -30,46 +87,11 @@ $endif$
 %% \signedURL{...}: place URL flush right, newline when necessary
 \def\signedURL #1{{\signed{[\url{#1}]}  \vspace{0.5em}}}
 
-$if(tables)$
-\usepackage{longtable}
-$endif$
-
-$if(listings)$
-\usepackage{listings}
-$endif$
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
-$endif$
-$if(graphics)$
-\usepackage{graphicx}
-% Redefine \includegraphics so that, unless explicit options are
-% given, the image width will not exceed the width of the page.
-% Images get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
-\makeatletter
-\def\ScaleIfNeeded{%
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-\let\Oldincludegraphics\includegraphics
-{%
- \catcode`\@=11\relax%
- \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
-}%
-$endif$
-
-$if(numbersections)$
-\setcounter{secnumdepth}{5}
-$else$
-\setcounter{secnumdepth}{0}
-$endif$
-$if(verbatim-in-note)$
-\VerbatimFootnotes % allows verbatim text in footnotes
-$endif$
+% ticks for yes and cross for no
+\newcommand{\tickYes}{\ensuremath{\checkmark}}
+\newcommand{\tickNo}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{2713}{\tickYes}
+\DeclareUnicodeCharacter{2717}{\tickNo}
 
 $for(header-includes)$
 $header-includes$
@@ -78,9 +100,9 @@ $endfor$
 \begin{document}
 
 \date{$date$}
-\phone{}
+\phone{650 3960}
 \secy{650 1000} % Switchboard number
-\fax{650 3660}
+\fax{}
 \email{mark.sprevak@ed.ac.uk}
 \href{http://sites.google.com/site/msprevak}
 \signature{$if(signed)$\vspace{-4em}$endif$ $author.name$}
@@ -103,6 +125,10 @@ $include-before$
 $endfor$
 
 $body$
+
+$if(natbib)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+$endif$
 
 $for(include-after)$
 $include-after$
