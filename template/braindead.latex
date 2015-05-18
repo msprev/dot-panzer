@@ -1,22 +1,24 @@
-\documentclass[a4paper,12pt]{article}
-\usepackage{fixltx2e}
+\documentclass[$fontsize$,$lang$,$papersize$,$for(classoption)$$classoption$$sep$,$endfor$]{article}
+
+\usepackage{fixltx2e} % provides \textsubscript
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+
+\usepackage[$papersize$,tmargin=1in,bmargin=1in,lmargin=1.25in,rmargin=1.25in]{geometry}
 \usepackage{txfonts}
 $if(endnotes)$
 \usepackage{endnotes}
 \let\footnote=\endnote
 $endif$
-\usepackage[a4paper,vmargin=2.54cm,hmargin=3.17cm]{geometry}
-\usepackage{booktabs}
 \usepackage{url}
-\usepackage[british]{babel}
+\usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage[babel,verbose=silent]{microtype}
-
-
-% Force footnotes to stay on the same page
-\interfootnotelinepenalty=10000
 
 %% [natbib]: use natbib option for biblatex
 $if(natbib)$
@@ -24,56 +26,186 @@ $if(natbib)$
             authordate,
             natbib,
             sortcites,
-            backend=biber]{biblatex-chicago}
+            backend=biber,
+            hyperref=false]{biblatex-chicago}
 $if(biblio-files)$
-\addbibresource{$biblio-files$.bib}
+\addbibresource{$biblio-files$}
 $endif$
 \setlength\bibitemsep{6pt}
 \defbibheading{bibliography}[\refname]{\section*{#1} \sectionmark{#1}}
 \defbibheading{references}[\refname]{\section*{#1} \sectionmark{#1}}
 $endif$
 
-% \usepackage[
-%   unicode    = true,
-%   breaklinks = true,
-%   bookmarks  = true,
-%   pdftitle   = {$title-meta$},
-%   colorlinks = true,
-%   citecolor  = purple_link,
-%   linkcolor  = purple_link,
-%   urlcolor   = purple_link]{hyperref}
-\usepackage{philosophy}		% Word-like typesetting
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+
+%% Dark blue for hyperlinks
+\definecolor{blue_link}{RGB}{0, 0, 255}
+
+%% breaklinks: allow links to break over lines
+%% bookmarks: a set of Acrobat bookmarks are written, in a manner similar to the table of contents, requiring two passes of LATEX
+%% unicode: unicode encoded PDF strings
+%% bookmarksnumbered: if bookmarks are created, include section numbers
+%% pdfborder: the style of box around links; defaults to a box with lines of 1pt thickness, but the colorlinks option resets it to produce no border.
+%% pdftex: sets up hyperref for use with the pdftex program.
+\usepackage[breaklinks = true,
+            bookmarks  = true,
+            colorlinks = true,
+            citecolor  = $if(citecolor)$$citecolor$$else$blue_link$endif$,
+            urlcolor   = $if(urlcolor)$$urlcolor$$else$blue_link$endif$,
+            linkcolor  = $if(linkcolor)$$linkcolor$$else$blue_link$endif$,
+            unicode    = true,       %% unicode breaks when used with xetex
+     bookmarksnumbered = true,
+            pdfborder={0 0 0},
+            pdftex,
+            hyperfootnotes=false]{hyperref}
+
+% Force footnotes to stay on the same page
+\interfootnotelinepenalty=10000
 
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
-
-$if(tables)$
-\usepackage{longtable}
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
 $endif$
-
-$if(listings)$
-\usepackage{listings}
-$endif$
-
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
-$endif$
-
-$if(graphics)$
-\usepackage{graphicx}
-$endif$
-
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
 $else$
 \setcounter{secnumdepth}{0}
 $endif$
-
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           braindead                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\footnotesize\thepage} % except the center
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+\pagestyle{plain}
+
+\usepackage{abstract}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+
+%% Set most font sizes to 12pt
+
+\makeatletter
+\renewcommand\normalsize{%
+   \@setfontsize\normalsize\@xiipt{14.5}%
+   \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+\normalsize
+% \renewcommand\small{%
+%    \@setfontsize\small\@xiipt{14.5}%
+%    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
+%    \abovedisplayshortskip \z@ \@plus3\p@
+%    \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+%    \belowdisplayskip \abovedisplayskip
+%    \let\@listi\@listI}
+% \renewcommand\footnotesize{%
+%   \@setfontsize\footnotesize\@xiipt{14.5}%
+%    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
+%    \abovedisplayshortskip \z@ \@plus3\p@
+%    \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+%    \belowdisplayskip \abovedisplayskip
+%    \let\@listi\@listI}
+\renewcommand\scriptsize{\@setfontsize\scriptsize\@viiipt{9.5}}
+\renewcommand\tiny{\@setfontsize\tiny\@vipt\@viipt}
+\renewcommand\large{\@setfontsize\large\@xiipt{14.5}}
+\renewcommand\Large{\@setfontsize\Large\@xiipt{14.5}}
+\renewcommand\LARGE{\@setfontsize\LARGE\@xiipt{14.5}}
+\renewcommand\huge{\@setfontsize\huge\@xiipt{14.5}}
+% \setlength\footnotesep{16\p@}
+
+\setlength\textwidth{429\p@}
+\setlength\oddsidemargin   {20\p@}
+\setlength\evensidemargin  {20\p@}
+
+\raggedright
+\renewcommand\baselinestretch{1.75}% Adjust if you like
+
+
+%% Have quotes indented on the left only
+
+\renewenvironment{quote}% No extra indent on first line
+               {\list{}%
+                \small\item[]}
+               {\endlist}
+
+
+%% Something I use in bibliographies...
+
+\def\bibliorule{{\rule[-.01in]{.5in}{.005in}}}
+
+\usepackage[ragged,hang]{footmisc}
+\setlength{\footnotemargin}{2mm} % space between footnote mark and footnote text
+\setlength{\footnotesep}{\baselineskip} % vertical space between footnotes
+
+$if(endnotes)$
+%% Turns footnotes into endnotes.
+%% Requires endnotes.sty
+\renewcommand{\footnote}[1]{\endnote{#1}}
+
+\def\@makeenmark{\hbox{$$^{\tt\@theenmark}$$}}
+
+\newcommand{\noteshere}{%
+     \newpage
+     \begingroup
+     \parindent 0pt
+     \parskip 2ex
+     \def\enotesize{\normalsize}
+     \def\enoteformat{\rightskip=.75in \leftskip\z@ \parindent=0em
+     \leavevmode\llap{\hbox{$$^{\tt \@theenmark}$$}}}%(tt) added, from AC's brain_damage.sty
+     \theendnotes
+     \newpage
+     \endgroup}
+
+\def\enoteformat{\rightskip\z@ \leftskip\z@ \parindent=.40in
+     \leavevmode\llap{\hbox{$$^{\@theenmark}$$}}}
+$endif$
+
+%% Standard large para indents
+
+\setlength\parindent{.40in}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        end of braindead                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 $for(header-includes)$
 $header-includes$
@@ -112,16 +244,41 @@ $endif$
 $if(title)$
 \maketitle
 $endif$
+$if(abstract)$
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+\begin{abstract}
+\noindent $abstract$
+\end{abstract}
+$endif$
 
 $for(include-before)$
 $include-before$
+
 $endfor$
 
 $if(toc)$
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
+}
 $endif$
-
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
 $body$
+
+$if(acknowledgements)$
+$if(anonymous)$
+$else$
+\section*{Acknowledgements}
+$acknowledgements$
+$endif$
+$endif$
 
 $if(natbib)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
@@ -135,5 +292,4 @@ $if(endnotes)$
 \raggedright
 \noteshere
 $endif$
-
 \end{document}

@@ -10,7 +10,7 @@ $if(euro)$
 $endif$
 $if(horiz-whitespace)$
 $else$
-\usepackage[a4paper]{geometry}
+\usepackage[$papersize$]{geometry}
 \geometry{
   top=2.5cm,
   bottom=3.5cm

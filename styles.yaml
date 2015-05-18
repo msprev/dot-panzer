@@ -79,6 +79,7 @@ Braindead:
         metadata:
             endnotes: false    # use endnotes rather than footnotes
             anonymous: false   # don't include author info
+            fontsize: 12pt
 
 
 Draft:
