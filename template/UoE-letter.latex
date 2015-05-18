@@ -100,11 +100,11 @@ $endfor$
 \begin{document}
 
 \date{$date$}
-\phone{650 3960}
-\secy{650 1000} % Switchboard number
+\phone{$phone$}
+\secy{$switchboard$}
 \fax{}
-\email{mark.sprevak@ed.ac.uk}
-\href{http://sites.google.com/site/msprevak}
+\email{$author.email$}
+\href{$website$}
 \signature{$if(signed)$\vspace{-4em}$endif$ $author.name$}
 
 \begin{letter}{}

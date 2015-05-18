@@ -74,11 +74,13 @@ BookReview:
 Braindead:
     parent:
         - Article
+    all:
+        metadata:
+            anonymous: false   # remove author info
+            endnotes: false    # endnotes, not footnotes
     latex:
         template: braindead.latex
         metadata:
-            endnotes: false    # use endnotes rather than footnotes
-            anonymous: false   # don't include author info
             fontsize: 12pt
 
 
@@ -157,6 +159,9 @@ Letter:
         metadata:
             opening: false
             closing: "Yours sincerely,"
+            website: "http://sites.google.com/site/msprevak"
+            switchboard: "650 1000"
+            phone: "650 3960"
             cc: false
             ps: false
             incl: false
