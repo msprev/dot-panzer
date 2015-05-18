@@ -31,7 +31,6 @@ $endif$
 \usepackage{enumitem}
 \usepackage{titling}
 \usepackage[small,pagestyles]{titlesec}
-\usepackage[$lang$,orig,cleanlook]{isodate}
 \usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage[babel,verbose=silent]{microtype}

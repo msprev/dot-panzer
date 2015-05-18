@@ -1,4 +1,4 @@
-\documentclass[$fontsize$,$lang$,$papersize$,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[$fontsize$,$lang$,$papersize$,$for(classoption)$$classoption$$sep$,$endfor$]{article}
 
 \usepackage{fixltx2e} % provides \textsubscript
 \usepackage[T1]{fontenc}
@@ -31,7 +31,6 @@ $endif$
 \usepackage{xcolor}
 \usepackage{enumitem}
 \usepackage[pagestyles$if(vert-whitespace)$$else$,compact$endif$]{titlesec}
-\usepackage[$lang$,orig,cleanlook]{isodate}
 \usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage[babel,verbose=silent]{microtype}

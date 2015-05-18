@@ -8,13 +8,8 @@
 $if(euro)$
   \usepackage{eurosym}
 $endif$
-
 \usepackage[$papersize$,tmargin=1in,bmargin=1in,lmargin=1.25in,rmargin=1.25in]{geometry}
 \usepackage{txfonts}
-$if(endnotes)$
-\usepackage{endnotes}
-\let\footnote=\endnote
-$endif$
 \usepackage{url}
 \usepackage[$lang$]{babel}
 \usepackage[autostyle]{csquotes}
@@ -61,7 +56,7 @@ $if(graphics)$
 $endif$
 
 %% Dark blue for hyperlinks
-\definecolor{blue_link}{RGB}{0, 0, 255}
+\definecolor{blue_link}{RGB}{0, 0, 238}
 
 %% breaklinks: allow links to break over lines
 %% bookmarks: a set of Acrobat bookmarks are written, in a manner similar to the table of contents, requiring two passes of LATEX
@@ -104,8 +99,11 @@ $endif$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           braindead                                  %
+% adapted from: http://gregorywheeler.org/latex/philosophy.sty         %
+% which was adapted from: Allin Cottrell's brain_damage.sty            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% Small page numbers in footer
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{%
 \fancyhf{} % clear all header and footer fields
@@ -114,11 +112,15 @@ $endif$
 \renewcommand{\footrulewidth}{0pt}}
 \pagestyle{plain}
 
+%% Dot after section number in headings
+\usepackage{titlesec}
+\titlelabel{\thetitle.\enskip}
+
+%% Small font for abstract
 \usepackage{abstract}
 \renewcommand{\abstracttextfont}{\normalfont\small}
 
 %% Set most font sizes to 12pt
-
 \makeatletter
 \renewcommand\normalsize{%
    \@setfontsize\normalsize\@xiipt{14.5}%
@@ -128,59 +130,35 @@ $endif$
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
 \normalsize
-% \renewcommand\small{%
-%    \@setfontsize\small\@xiipt{14.5}%
-%    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
-%    \abovedisplayshortskip \z@ \@plus3\p@
-%    \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
-%    \belowdisplayskip \abovedisplayskip
-%    \let\@listi\@listI}
-% \renewcommand\footnotesize{%
-%   \@setfontsize\footnotesize\@xiipt{14.5}%
-%    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
-%    \abovedisplayshortskip \z@ \@plus3\p@
-%    \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
-%    \belowdisplayskip \abovedisplayskip
-%    \let\@listi\@listI}
 \renewcommand\scriptsize{\@setfontsize\scriptsize\@viiipt{9.5}}
 \renewcommand\tiny{\@setfontsize\tiny\@vipt\@viipt}
 \renewcommand\large{\@setfontsize\large\@xiipt{14.5}}
 \renewcommand\Large{\@setfontsize\Large\@xiipt{14.5}}
 \renewcommand\LARGE{\@setfontsize\LARGE\@xiipt{14.5}}
 \renewcommand\huge{\@setfontsize\huge\@xiipt{14.5}}
-% \setlength\footnotesep{16\p@}
 
+%% Margins
 \setlength\textwidth{429\p@}
 \setlength\oddsidemargin   {20\p@}
 \setlength\evensidemargin  {20\p@}
 
+%% Layout of text
 \raggedright
-\renewcommand\baselinestretch{1.75}% Adjust if you like
-
+\renewcommand\baselinestretch{1.75} % Adjust if you like
 
 %% Have quotes indented on the left only
-
 \renewenvironment{quote}% No extra indent on first line
                {\list{}%
                 \small\item[]}
                {\endlist}
 
-
-%% Something I use in bibliographies...
-
-\def\bibliorule{{\rule[-.01in]{.5in}{.005in}}}
-
-\usepackage[ragged,hang]{footmisc}
-\setlength{\footnotemargin}{2mm} % space between footnote mark and footnote text
-\setlength{\footnotesep}{\baselineskip} % vertical space between footnotes
-
+%% Footnotes/endnotes
 $if(endnotes)$
-%% Turns footnotes into endnotes.
-%% Requires endnotes.sty
+% Footnotes -> endnotes
+\usepackage{endnotes}
+\let\footnote=\endnote
 \renewcommand{\footnote}[1]{\endnote{#1}}
-
 \def\@makeenmark{\hbox{$$^{\tt\@theenmark}$$}}
-
 \newcommand{\noteshere}{%
      \newpage
      \begingroup
@@ -192,20 +170,22 @@ $if(endnotes)$
      \theendnotes
      \newpage
      \endgroup}
-
 \def\enoteformat{\rightskip\z@ \leftskip\z@ \parindent=.40in
      \leavevmode\llap{\hbox{$$^{\@theenmark}$$}}}
+$else$
+% Raggedright footnotes
+\usepackage[ragged,hang]{footmisc}
+\setlength{\footnotemargin}{2mm} % space between footnote mark and footnote text
+\setlength{\footnotesep}{\baselineskip} % vertical space between footnotes
 $endif$
 
 %% Standard large para indents
-
 \setlength\parindent{.40in}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        end of braindead                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 $for(header-includes)$
 $header-includes$

@@ -14,7 +14,6 @@
 \usepackage{enumitem}
 \usepackage{gitinfo}
 \usepackage[tiny,compact,sf,bf,pagestyles]{titlesec}
-\usepackage[british,orig,cleanlook]{isodate}
 \usepackage[british]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage[babel,verbose=silent]{microtype}
