@@ -14,6 +14,9 @@ Base:
             lang: british
             papersize: a4paper
             biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
+        commandline:
+            smart: true
+            standalone: true
         preflight:
             - run: tmp_out.py
         postflight:
