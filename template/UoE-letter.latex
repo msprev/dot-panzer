@@ -100,12 +100,12 @@ $endfor$
 \begin{document}
 
 \date{$date$}
-\phone{$phone$}
-\secy{$switchboard$}
+\phone{$letterhead.phone$}
+\secy{$letterhead.switchboard$}
 \fax{}
-\email{$author.email$}
-\href{$website$}
-\signature{$if(signed)$\vspace{-4em}$endif$ $author.name$}
+\email{$letterhead.email$}
+\href{$letterhead.website$}
+\signature{$if(signed)$\vspace{-4em}$endif$ $for(author)$$author.name$$endfor$}
 
 \begin{letter}{}
 
