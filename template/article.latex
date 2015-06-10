@@ -156,6 +156,8 @@ $endif$
 
 %% Text can stretch a little into margins to avoid bad line-breaks
 \setlength{\emergencystretch}{3em}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 %% Footnotes: stay on the same page
 \interfootnotelinepenalty=10000

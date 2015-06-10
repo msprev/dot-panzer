@@ -18,13 +18,13 @@
 \usepackage[autostyle]{csquotes}
 \usepackage[babel,verbose=silent]{microtype}
 
-%% [natbib]: use natbib option for biblatex 
+%% [natbib]: use natbib option for biblatex
 $if(natbib)$
 \usepackage[useprefix,
             authordate,
             natbib,
             sortcites,
-            backend=biber]{biblatex-chicago}    
+            backend=biber]{biblatex-chicago}
 $if(biblio-files)$
 \addbibresource{$biblio-files$.bib}
 $endif$
@@ -34,13 +34,13 @@ $endif$
 $endif$
 
 %% Git date and commit hash: print if set, otherwise do nothing
-\ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0 
+\ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0
     \def\gitstamp{\relax}
 \else
 	\def\gitstamp{\flushright{\scriptsize \texttt{\gitAbbrevHash\ on \gitAuthorDate}}}
 \fi
 
-%% Right footer of first page: email address 
+%% Right footer of first page: email address
 \renewpagestyle{empty}{
   \setfoot{\hfill}{\hfill}{\footnotesize \href{mailto:mark.sprevak@ed.ac.uk}{\texttt{mark.sprevak@ed.ac.uk}}}
 }
@@ -55,6 +55,8 @@ $endif$
 
 %% Text can stretch a little into margins to avoid bad line-breaks
 \setlength{\emergencystretch}{3em}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 %% Footnotes: stay on the same page
 \interfootnotelinepenalty=10000
@@ -119,7 +121,7 @@ $endif$
 \makeatother
 
 %% \signed{...}: flush right, newline when necessary
-%% usage: \signed{\citep{Lewis00}} 
+%% usage: \signed{\citep{Lewis00}}
 \def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
   \hbox{}\nobreak\hfil#1%
   \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
@@ -163,7 +165,7 @@ $endif$
 %% Paragraphs: don't indent first line
 %% Paragraphs: add small space to separate paragraphs
 %% Paragraphs: negative hanging indent
-%% Paragraphs: shift entire para right by hanging indent  
+%% Paragraphs: shift entire para right by hanging indent
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \parindent -0.1in
@@ -193,7 +195,7 @@ $endif$
 %% \gitAuthorDate set: set that as the date
 %% Otherwise: set \today as the date
 %% This is overridden if $date$ is set manually in document
-\ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0 
+\ifnum\pdfstrcmp{\gitAuthorDate}{(None)}=0
   \date{\today}
 \else
   \date{\printdate{\gitAuthorDate}}
@@ -204,7 +206,7 @@ $if(date)$
 $endif$
 
 \begin{document}
-    
+
 $if(title)$
 \maketitle
 $endif$
