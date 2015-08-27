@@ -133,6 +133,15 @@ NotesSans:
         metadata:
             sans-style: true
 
+Marking:
+    parent:
+        - Notes
+    all:
+        metadata:
+            numbersections: false
+        filter:
+            - run: paginatesects.py
+
 ########################################################################
 #                                  CV                                  #
 ########################################################################
