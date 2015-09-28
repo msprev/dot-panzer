@@ -2,7 +2,6 @@
 """
 Makes ordered lists between open and close div tags one big list.
 Picks the first ordered list type it hits after opening tag as the list to match on.
-To have nested singlelists, use unique id tags in the opening div.
 
 Example:
 
@@ -15,7 +14,6 @@ Example:
     1. hello again
     2. there again
     </div>
-
 
 -- filter transforms to ->>>:
     1. hello
@@ -39,7 +37,7 @@ def transform_div(key, value, format, meta):
 def singlelist(lst, pat):
     if lst == []:
         return []
-    x = lst[0]   # head
+    x = lst[0]    # head
     xs = lst[1:]  # tail
     if type(x) is dict and 't' in x and x['t'] == 'OrderedList':
         spec = list(x['c'][0])
@@ -50,7 +48,7 @@ def singlelist(lst, pat):
             offset = len(items)
             pat[0] += offset
         elif spec[1] == pat[1] and spec[2] == pat[2]:
-            # if matches spec of current pattern, then increment it
+            # if spec matches current pattern, then increment start number
             x['c'][0][0] = pat[0]
             offset = len(items)
             pat[0] += offset
