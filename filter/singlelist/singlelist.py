@@ -25,9 +25,6 @@ Example:
     4. there again
 """
 
-import json
-import sys
-import os
 from pandocfilters import *
 
 def transform_div(key, value, format, meta):
