@@ -1,223 +1,227 @@
-########################################################################
-#                     Base - parent of all styles                      #
-########################################################################
+####################################################
+#           Base - parent of all styles            #
+####################################################
 
 Base:
-    all:
-        metadata:
-            numbersections: true
-            bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
-        commandline:
-            smart: true
-            standalone: true
-        filter:
-            - run: smallcaps.py
-    latex:
-        metadata:
-            lang: british
-            papersize: a4paper
-            biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
-        preflight:
-            - run: tmp_out.py
-        postflight:
-            - run: latexmk.py
-            - run: open_pdf.py
-        cleanup:
-            - run: tmp_back.py
-            - run: rmlatex.py
+  all:
+    metadata:
+      numbersections: true
+      bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
+    commandline:
+      smart: true
+      standalone: true
+    filter:
+      - run: smallcaps.py
+    read:
+      markdown:
+        multiline_tables: true
+        table_captions: false
+  latex:
+    metadata:
+      lang: british
+      papersize: a4paper
+      biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
+    preflight:
+      - run: tmp_out.py
+    postflight:
+      - run: latexmk.py
+      - run: open_pdf.py
+    cleanup:
+      - run: tmp_back.py
+      - run: rmlatex.py
 
-########################################################################
-#                               Article                                #
-########################################################################
+##########################################
+#               Article                  #
+##########################################
 
 Article:
-    parent:
-        - Base
-    all:
-        metadata:
-            title: "Untitled"
-            author:
-                - name: "No author"
-                  affiliation: "No affiliation"
-                  email: "no@email"
-            published: "*Draft only. Please do not cite without permission.*"
-            doi: false
-    latex:
-        template: article.latex
-        metadata:
-            fontsize: 12pt
-        commandline:
-            natbib: true
-    html:
-        template: article.html
-        commandline:
-            include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
-        filter:
-            - run: addrefline.py
-            - run: pandoc-citeproc
-    docx:
-        filter:
-            - run: addrefline.py
-            - run: pandoc-citeproc
+  parent:
+    - Base
+  all:
+    metadata:
+      title: "Untitled"
+      author:
+        - name: "No author"
+          affiliation: "No affiliation"
+          email: "no@email"
+      published: "*Draft only. Please do not cite without permission.*"
+      doi: false
+  latex:
+    template: article.latex
+    metadata:
+      fontsize: 12pt
+    commandline:
+      natbib: true
+  html:
+    template: article.html
+    commandline:
+      include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
+    filter:
+      - run: addrefline.py
+      - run: pandoc-citeproc
+  docx:
+    filter:
+      - run: addrefline.py
+      - run: pandoc-citeproc
 
 BookReview:
-    parent:
-        - Article
-    all:
-        metadata:
-            review:
-                title: "No title"
-                author: "No author"
-                editor: "No editor"
-                publisher: "No publisher"
-                address: "No address"
-                year: "No year"
-                pages: "No pages"
-                price: "No price"
-                ISBN: "No ISBN"
+  parent:
+    - Article
+  all:
+    metadata:
+      review:
+        title: "No title"
+        author: "No author"
+        editor: "No editor"
+        publisher: "No publisher"
+        address: "No address"
+        year: "No year"
+        pages: "No pages"
+        price: "No price"
+        ISBN: "No ISBN"
 
 Braindead:
-    parent:
-        - Article
-    all:
-        metadata:
-            anonymous: false   # remove author info
-            endnotes: false    # endnotes, not footnotes
-    latex:
-        template: braindead.latex
-        metadata:
-            fontsize: 12pt
-        commandline:
-            natbib: false
+  parent:
+    - Article
+  all:
+    metadata:
+      anonymous: false   # remove author info
+      endnotes: false    # endnotes, not footnotes
+  latex:
+    template: braindead.latex
+    metadata:
+      fontsize: 12pt
+    commandline:
+      natbib: false
 
 
 Draft:
-    parent: Article
-    latex:
-        metadata:
-            savetrees: true
-            fontsize: 11pt
-        commandline:
-            natbib: false
+  parent: Article
+  latex:
+    metadata:
+      savetrees: true
+      fontsize: 11pt
+    commandline:
+      natbib: false
 
 AddLatexRefs:
-    latex:
-        commandline:
-            natbib: true
+  latex:
+    commandline:
+      natbib: true
 
 
-########################################################################
-#                                Notes                                 #
-########################################################################
+##########################################
+#                Notes                   #
+##########################################
 
 Notes:
-    parent:
-        - Base
-    latex:
-        template: notes.latex
-        metadata:
-            fontsize: 11pt
-            vert-whitespace: true   # looser vertical spacing
-            horiz-whitespace: false # wider horizontal margins
-            tabbing-digits: false   # fixed-size digits
-            sans-style: false       # sans serif style
-    html:
-        template: article.html
-        metadata:
-            css: "/Users/msprevak/.panzer/template/css/topi.css"
+  parent:
+    - Base
+  latex:
+    template: notes.latex
+    metadata:
+      fontsize: 11pt
+      vert-whitespace: true # looser vertical spacing
+      horiz-whitespace: false # wider horizontal margins
+      tabbing-digits: false # fixed-size digits
+      sans-style: false   # sans serif style
+  html:
+    template: article.html
+    metadata:
+      css: "/Users/msprevak/.panzer/template/css/topi.css"
 
 NotesSans:
-    parent:
-        - Notes
-    latex:
-        metadata:
-            sans-style: true
+  parent:
+    - Notes
+  latex:
+    metadata:
+      sans-style: true
 
 Marking:
-    parent:
-        - Notes
-    all:
-        metadata:
-            numbersections: false
-        filter:
-            - run: paginatesects.py
+  parent:
+    - Notes
+  all:
+    metadata:
+      numbersections: false
+    filter:
+      - run: paginatesects.py
 
-########################################################################
-#                                  CV                                  #
-########################################################################
+########################################
+#                  CV                  #
+########################################
 
 CV:
-    parent:
-        - Notes
-    latex:
-        metadata:
-            vert-whitespace: false
-            horiz-whitespace: false
-            fontsize: 10pt
-            include-before:
-                - '\raggedright'
-        postflight:
-            - kill: open_pdf.py
+  parent:
+    - Notes
+  latex:
+    metadata:
+      vert-whitespace: false
+      horiz-whitespace: false
+      fontsize: 10pt
+      include-before:
+        - '\raggedright'
+    postflight:
+      - kill: open_pdf.py
 
-########################################################################
-#                               Mumford                                #
-########################################################################
+##########################################
+#               Mumford                  #
+##########################################
 
 Mumford:
-    parent:
-        - Base
-    latex:
-        template: mumford.latex
-        metadata:
-            fontsize: 11pt
+  parent:
+    - Base
+  latex:
+    template: mumford.latex
+    metadata:
+      fontsize: 11pt
 
-########################################################################
-#                               Letter                                 #
-########################################################################
+##########################################
+#               Letter                   #
+##########################################
 
 Letter:
-    parent:
-        - Base
-    all:
-        metadata:
-            opening: false
-            closing: "Yours sincerely,"
-            letterhead:
-                image: "/Users/msprevak/.panzer/template/img/eulogo.pdf"
-                sender: "Dr. Mark Sprevak"
-                role: "Senior Lecturer"
-                affiliation: "SCHOOL *of* PHILOSOPHY, PSYCHOLOGY *and* LANGUAGE SCIENCES"
-                address: |
-                    | The University of Edinburgh
-                    | Dugald Stewart Building
-                    | 3 Charles Street
-                    | Edinburgh EH8 9AD
-                phone: "650 3960"
-                switchboard: "650 1000"
-                email: "mark.sprevak@ed.ac.uk"
-                website: "http://sites.google.com/site/msprevak"
-            cc: false
-            ps: false
-            incl: false
-            signed: true            # sign using image below
-            signature: "/Users/msprevak/Documents/Correspondence/Signature.png"
-    latex:
-        template: UoE-letter.latex
-        metadata:
-            fontsize: 11pt
+  parent:
+    - Base
+  all:
+    metadata:
+      opening: false
+      closing: "Yours sincerely,"
+      letterhead:
+        image: "/Users/msprevak/.panzer/template/img/eulogo.pdf"
+        sender: "Dr. Mark Sprevak"
+        role: "Senior Lecturer"
+        affiliation: "SCHOOL *of* PHILOSOPHY, PSYCHOLOGY *and* LANGUAGE SCIENCES"
+        address: |
+          | The University of Edinburgh
+          | Dugald Stewart Building
+          | 3 Charles Street
+          | Edinburgh EH8 9AD
+        phone: "650 3960"
+        switchboard: "650 1000"
+        email: "mark.sprevak@ed.ac.uk"
+        website: "http://sites.google.com/site/msprevak"
+      cc: false
+      ps: false
+      incl: false
+      signed: true      # sign using image below
+      signature: "/Users/msprevak/Documents/Correspondence/Signature.png"
+  latex:
+    template: UoE-letter.latex
+    metadata:
+      fontsize: 11pt
 
-########################################################################
-#                Plain, uses pandoc's default template                 #
-########################################################################
+##########################################################
+#        Plain, uses pandoc's default template           #
+##########################################################
 
 Plain:
-    parent:
-        - Base
-    all:
-        template:
-        filter:
-            - run: name2auth.py
-    latex:
-        metadata:
-            geometry: a4paper
+  parent:
+    - Base
+  all:
+    template:
+    filter:
+      - run: name2auth.py
+  latex:
+    metadata:
+      geometry: a4paper
 
