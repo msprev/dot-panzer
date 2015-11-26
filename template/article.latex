@@ -8,6 +8,9 @@
 $if(euro)$
   \usepackage{eurosym}
 $endif$
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
 $if(savetrees)$
 \usepackage{geometry}
 \geometry{
