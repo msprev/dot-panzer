@@ -4,29 +4,26 @@
 
 Base:
   all:
-    metadata:
-      numbersections: true
-      bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
-    commandline:
-      smart: true
-      standalone: true
-    filter:
+      metadata:
+        numbersections: true
+        bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
+        yaml-publications: "/Users/msprevak/Documents/CV/publications.yaml"
+      commandline:
+        smart: true
+        standalone: true
+      filter:
       - run: smallcaps.py
-    read:
-      markdown:
-        multiline_tables: true
-        table_captions: false
   latex:
-    metadata:
-      lang: british
-      papersize: a4paper
-      biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
-    preflight:
+      metadata:
+        lang: british
+        papersize: a4paper
+        biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
+      preflight:
       - run: tmp_out.py
-    postflight:
+      postflight:
       - run: latexmk.py
       - run: open_pdf.py
-    cleanup:
+      cleanup:
       - run: tmp_back.py
       - run: rmlatex.py
 
@@ -38,35 +35,35 @@ Article:
   parent:
     - Base
   all:
-    metadata:
-      title: "Untitled"
-      author:
+      metadata:
+        title: "Untitled"
+        author:
         - name: "No author"
           affiliation: "No affiliation"
           email: "no@email"
-      published: "*Draft only. Please do not cite without permission.*"
-      doi: false
+        published: "*Rough draft only. Please do not cite without permission.*"
+        doi: false
   latex:
-    template: article.latex
-    metadata:
-      fontsize: 12pt
-    commandline:
-      natbib: true
+      template: article.latex
+      metadata:
+        fontsize: 12pt
+      commandline:
+        natbib: true
   html:
-    template: article.html
-    commandline:
-      include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
-    filter:
+      template: article.html
+      commandline:
+        include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
+      filter:
       - run: addrefline.py
       - run: pandoc-citeproc
   docx:
-    filter:
+      filter:
       - run: addrefline.py
       - run: pandoc-citeproc
 
 BookReview:
   parent:
-    - Article
+  - Article
   all:
     metadata:
       review:
@@ -82,7 +79,7 @@ BookReview:
 
 Braindead:
   parent:
-    - Article
+  - Article
   all:
     metadata:
       anonymous: false   # remove author info
@@ -116,7 +113,10 @@ AddLatexRefs:
 
 Notes:
   parent:
-    - Base
+  - Base
+  all:
+    filter:
+    - run: singlelist.py
   latex:
     template: notes.latex
     metadata:
@@ -132,19 +132,25 @@ Notes:
 
 NotesSans:
   parent:
-    - Notes
+  - Notes
   latex:
     metadata:
       sans-style: true
 
+SaveTrees:
+  latex:
+    metadata:
+      vert-whitespace: false
+      fontsize: 10pt
+
 Marking:
   parent:
-    - Notes
+  - Notes
   all:
     metadata:
       numbersections: false
     filter:
-      - run: paginatesects.py
+    - run: paginatesects.py
 
 ########################################
 #                  CV                  #
@@ -152,16 +158,16 @@ Marking:
 
 CV:
   parent:
-    - Notes
+  - Notes
   latex:
     metadata:
       vert-whitespace: false
       horiz-whitespace: false
       fontsize: 10pt
       include-before:
-        - '\raggedright'
+      - '\raggedright'
     postflight:
-      - kill: open_pdf.py
+    - kill: open_pdf.py
 
 ##########################################
 #               Mumford                  #
@@ -169,11 +175,25 @@ CV:
 
 Mumford:
   parent:
-    - Base
+  - Base
   latex:
     template: mumford.latex
     metadata:
       fontsize: 11pt
+  revealjs:
+    template: slideshow.revealjs
+    metadata:
+      theme: white
+      transition: none
+      history: 'false'
+      controls: 'false'
+      progress: 'false'
+      backgroundTransition: 'fade'
+    commandline:
+      smart: true
+      standalone: true
+      incremental: true
+
 
 ##########################################
 #               Letter                   #
@@ -181,7 +201,7 @@ Mumford:
 
 Letter:
   parent:
-    - Base
+  - Base
   all:
     metadata:
       opening: false
@@ -209,6 +229,8 @@ Letter:
     template: UoE-letter.latex
     metadata:
       fontsize: 11pt
+    filter:
+    - run: heading2bold.py
 
 ##########################################################
 #        Plain, uses pandoc's default template           #
@@ -216,11 +238,11 @@ Letter:
 
 Plain:
   parent:
-    - Base
+  - Base
   all:
     template:
     filter:
-      - run: name2auth.py
+     - run: name2auth.py
   latex:
     metadata:
       geometry: a4paper

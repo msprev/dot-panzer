@@ -5,7 +5,7 @@ Picks the first ordered list type it hits after opening tag as the list to match
 
 Example:
 
-    <div class="FILTER-singlelist">
+    <div class="singlelist">
     1. hello
     2. there
 
@@ -28,10 +28,10 @@ Example:
 from pandocfilters import *
 
 def transform_div(key, value, format, meta):
-    if key == 'Div' and "FILTER-singlelist" in value[0][1]:
-        return singlelist(value[1], None)
+    if key == 'Div' and "singlelist" in value[0][1]:
+        return make_singlelist(value[1], None)
 
-def singlelist(lst, pat):
+def make_singlelist(lst, pat):
     if lst == []:
         return []
     x = lst[0]    # head
@@ -49,7 +49,7 @@ def singlelist(lst, pat):
             x['c'][0][0] = pat[0]
             offset = len(items)
             pat[0] += offset
-    return [x] + singlelist(xs, pat)
+    return [x] + make_singlelist(xs, pat)
 
 if __name__ == "__main__":
     toJSONFilter(transform_div)
