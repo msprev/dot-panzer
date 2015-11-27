@@ -43,6 +43,8 @@ Article:
           email: "no@email"
         published: "*Rough draft only. Please do not cite without permission.*"
         doi: false
+      filter:
+        - run: inject-publication.py
   latex:
       template: article.latex
       metadata:

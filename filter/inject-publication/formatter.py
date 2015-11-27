@@ -49,3 +49,23 @@ class Homepage(Base):
         f = getattr(homepage, e['type'], homepage.default)
         return f(e)
 
+class ByLine(Formatter):
+
+    def format_block(self, entries, starred):
+        if entries:
+            return self.add_entry(entries[0])
+        return str()
+
+    def add_entry(self, e):
+        from style import byline
+        f = getattr(byline, e['type'], byline.default)
+        return f(e)
+
+class ByLineDoi(Formatter):
+
+    def format_block(self, entries, starred):
+        if entries:
+            if 'doi' in entries[0]:
+                return entries[0]['doi']
+        return str()
+

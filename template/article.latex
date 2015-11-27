@@ -125,7 +125,7 @@ $endif$
 %%
 %% Center footer: page number
 %% Right header:  email address
-%% Left header:   publication info/'Draft only', DOI if \doi{..} set
+%% Left header:   publication info/'Draft only', doi if \doi{..} set
 %% \review:       set book review info below title, author, date
 %% \authorblock:  set author & affliations
 \newcommand{\published}[1]{\def\@publicationinfo{#1}}
@@ -246,9 +246,11 @@ $endif$
     pdfauthor = {$author-meta$} %% {\myauthor}
   }
 
-  %% \@doiinsert: formatted DOI link as set by \doi{}
+  %% \@doiinsert: formatted doi link as set by \doi{}
   \ifdefined\@doiinfo
-    \newcommand{\@doiinsert}{\@doilink{\@doiinfo}}
+    \ifblank{\@doiinfo}%
+        {\newcommand{\@doiinsert}{\relax}}%
+        {\newcommand{\@doiinsert}{\@doilink{\@doiinfo}}}
   \else
     \newcommand{\@doiinsert}{\relax}
   \fi
@@ -320,8 +322,8 @@ $endif$
 $if(published)$
 \published{$published$}
 $endif$
-$if(DOI)$
-\doi{$DOI$}
+$if(doi)$
+\doi{$doi$}
 $endif$
 
 $if(review)$
