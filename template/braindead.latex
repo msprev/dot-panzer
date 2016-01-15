@@ -56,6 +56,7 @@ $if(graphics)$
 $endif$
 
 %% Dark blue for hyperlinks
+\usepackage{color}
 \definecolor{blue_link}{RGB}{0, 0, 238}
 
 %% breaklinks: allow links to break over lines
