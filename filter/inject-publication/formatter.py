@@ -1,5 +1,9 @@
 from pandocinject import Formatter
 
+#####################################
+#  block formatters for <div> tags  #
+#####################################
+
 class Base(Formatter):
 
     def sort_entries(self, entries):
@@ -37,26 +41,30 @@ class Base(Formatter):
 
 class EdinburghCV(Base):
 
-    def add_entry(self, e):
+    def format_entry(self, e):
         from style import edinburghcv
         f = getattr(edinburghcv, e['type'], edinburghcv.default)
         return f(e)
 
 class Homepage(Base):
 
-    def add_entry(self, e):
+    def format_entry(self, e):
         from style import homepage
         f = getattr(homepage, e['type'], homepage.default)
         return f(e)
+
+#######################################
+#  inline formatters for <span> tags  #
+#######################################
 
 class ByLine(Formatter):
 
     def format_block(self, entries, starred):
         if entries:
-            return self.add_entry(entries[0])
+            return self.format_entry(entries[0])
         return str()
 
-    def add_entry(self, e):
+    def format_entry(self, e):
         from style import byline
         f = getattr(byline, e['type'], byline.default)
         return f(e)

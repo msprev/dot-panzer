@@ -21,7 +21,7 @@ class EdinburghCV(Formatter):
             Ludwig-Maximilians-Universität München (LMU)
     """
 
-    def add_entry(self, e):
+    def format_entry(self, e):
         """
         format single entry
         """

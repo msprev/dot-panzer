@@ -20,6 +20,14 @@ class Forthcoming(Selector):
             return True
         return False
 
+class Forthcoming_or_Published(Selector):
+    def select(self, e):
+        if type(e.get('year', 'x')) is int:
+            return True
+        elif e.get('year', 'x') == 'forthcoming':
+            return True
+        return False
+
 class InPreparation(Selector):
     def select(self, e):
         if e.get('year', 'x') == 'in preparation':
