@@ -7,7 +7,7 @@ Base:
       metadata:
         numbersections: true
         bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
-        yaml-publications: "/Users/msprevak/Documents/CV/publications.yaml"
+        metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
       commandline:
         smart: true
         standalone: true
