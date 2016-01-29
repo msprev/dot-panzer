@@ -18,9 +18,3 @@ class Current(Selector):
             return True
         return False
 
-class Past(Selector):
-    def select(self, e):
-        if e['degree'].get('completed', False):
-            return True
-        return False
-

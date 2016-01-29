@@ -4,27 +4,9 @@ from pandocinject import Selector
 #  Dates of publication  #
 ##########################
 
-class Published(Selector):
+class Proposed(Selector):
     def select(self, e):
-        if type(e.get('year', 'x')) is int:
-            return True
-        return False
-
-class Unpublished(Published):
-    def select(self, e):
-        return not super(Unpublished, self).select(e)
-
-class Forthcoming(Selector):
-    def select(self, e):
-        if e.get('year', 'x') == 'forthcoming':
-            return True
-        return False
-
-class Forthcoming_or_Published(Selector):
-    def select(self, e):
-        if type(e.get('year', 'x')) is int:
-            return True
-        elif e.get('year', 'x') == 'forthcoming':
+        if e.get('year', 'x') == 'proposed':
             return True
         return False
 
@@ -37,6 +19,18 @@ class InPreparation(Selector):
 class UnderReview(Selector):
     def select(self, e):
         if e.get('year', 'x') == 'under review':
+            return True
+        return False
+
+class Forthcoming(Selector):
+    def select(self, e):
+        if e.get('year', 'x') == 'forthcoming':
+            return True
+        return False
+
+class Published(Selector):
+    def select(self, e):
+        if type(e.get('year', 'x')) is int:
             return True
         return False
 
@@ -80,19 +74,6 @@ class Misc(Selector):
             return True
         return False
 
-class Article_or_Chapter(Selector):
-    def select(self, e):
-        if e.get('type', 'x') in ['article', 'incollection']:
-            return True
-        return False
-
-class Review_or_Misc(Selector):
-    def select(self, e):
-        if e.get('type', 'x') in ['bookreview', 'misc']:
-            return True
-        return False
-
-
 ################
 #  Authorship  #
 ################
@@ -102,9 +83,4 @@ class SingleAuthor(Selector):
         if 'coauthor' in e or 'coeditor' in e:
             return False
         return True
-
-class JointAuthor(SingleAuthor):
-    def select(self, e):
-        return not super(JointAuthor, self).select(e)
-
 

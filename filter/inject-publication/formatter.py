@@ -14,6 +14,8 @@ class Base(Formatter):
             # - 'under review' comes first
             # - 'forthcoming' comes next
             if type(e['year']) is str:
+                if e['year'] == 'proposed':
+                    r[0] = 6000
                 if e['year'] == 'in preparation':
                     r[0] = 5000
                 if e['year'] == 'under review':
@@ -42,6 +44,8 @@ class Base(Formatter):
 class EdinburghCV(Base):
 
     def format_entry(self, e):
+        from pandocinject.pandocinject import log
+        log('INFO', e.get('title', 'No title!'))
         from style import edinburghcv
         f = getattr(edinburghcv, e['type'], edinburghcv.default)
         return f(e)
@@ -53,27 +57,15 @@ class Homepage(Base):
         f = getattr(homepage, e['type'], homepage.default)
         return f(e)
 
-#######################################
-#  inline formatters for <span> tags  #
-#######################################
+#####################
+#  html formatters  #
+#####################
 
-class ByLine(Formatter):
+class Homepage(Formatter):
 
-    def format_block(self, entries, starred):
-        if entries:
-            return self.format_entry(entries[0])
-        return str()
-
-    def format_entry(self, e):
-        from style import byline
-        f = getattr(byline, e['type'], byline.default)
-        return f(e)
-
-class ByLineDoi(Formatter):
+    def __init__(self):
+        self.output_format = 'html'
 
     def format_block(self, entries, starred):
-        if entries:
-            if 'doi' in entries[0]:
-                return entries[0]['doi']
-        return str()
+        return '<p></p>'
 
