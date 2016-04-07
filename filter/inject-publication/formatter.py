@@ -9,30 +9,23 @@ class Base(Formatter):
     def sort_entries(self, entries):
         def custom_sort(e):
             r = [0, 0]
-            # 1. sort by date
+            # 1. sort by status
             # - 'in preparation' comes first
             # - 'under review' comes first
             # - 'forthcoming' comes next
-            if type(e['year']) is str:
-                if e['year'] == 'proposed':
-                    r[0] = 6000
-                if e['year'] == 'in preparation':
-                    r[0] = 5000
-                if e['year'] == 'under review':
-                    r[0] = 4000
-                if e['year'] == 'forthcoming':
-                    r[0] = 3000
-            # then normal dates come after
-            if type(e['year']) is int:
-                r[0] = e['year']
-            # 2. sort by type
-            ordering = ['book', 'collection', 'specialissue', 'article', 'incollection', 'bookreview']
-            if e['type'] in ordering:
-                r[1] = len(ordering) - ordering.index(e['type'])
-            else:
-                # put at the bottom if not known in ordering
-                r[1] = -1
-            # 3. sort by title
+            if e['status'] == 'proposed':
+                r[0] = 6
+            elif e['status'] == 'in preparation':
+                r[0] = 5
+            elif e['status'] == 'under review':
+                r[0] = 4
+            elif e['status'] == 'forthcoming':
+                r[0] = 3
+            elif e['status'] == 'published':
+                r[0] = 2
+            # 2. sort by date_updated
+            r[1] = e['date_updated']
+            # 3. sort by title/description
             a = str()
             if 'title' in e:
                 a = e['title']
@@ -44,28 +37,27 @@ class Base(Formatter):
 class EdinburghCV(Base):
 
     def format_entry(self, e):
+        import sys
         from pandocinject.pandocinject import log
-        log('INFO', e.get('title', 'No title!'))
+        log('INFO', '  - ' + e.get('title', 'No title!'))
         from style import edinburghcv
-        f = getattr(edinburghcv, e['type'], edinburghcv.default)
+        if 'published' in e:
+            n = e['published']['type']
+        else:
+            n = 'default'
+        f = getattr(edinburghcv, n, edinburghcv.default)
         return f(e)
 
-class Homepage(Base):
+class Quick(Base):
 
     def format_entry(self, e):
-        from style import homepage
-        f = getattr(homepage, e['type'], homepage.default)
+        import sys
+        from pandocinject.pandocinject import log
+        log('INFO', '  - ' + e.get('title', 'No title!'))
+        from style import quick
+        if 'published' in e:
+            n = e['published']['type']
+        else:
+            n = 'default'
+        f = getattr(quick, n, quick.default)
         return f(e)
-
-#####################
-#  html formatters  #
-#####################
-
-class Homepage(Formatter):
-
-    def __init__(self):
-        self.output_format = 'html'
-
-    def format_block(self, entries, starred):
-        return '<p></p>'
-

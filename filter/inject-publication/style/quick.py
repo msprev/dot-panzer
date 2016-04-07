@@ -18,13 +18,14 @@ def article(e):
     o += add_coauthors(e)
     try:
         if e['published']['journal']:
-            o += '\\' + '\n'
-            o += '*%s*' % e['published']['journal']
+            o += ', *%s*' % e['published']['journal']
     except KeyError:
         pass
     try:
         if e['published']['year']:
             o += ' (%s)' % str(e['published']['year'])
+        else:
+            o += ' (%s)' % e['status']
     except KeyError:
         pass
     try:
@@ -48,7 +49,7 @@ def monograph(e):
     o = str()
     o += "*%s*" % e['title']
     o += add_coauthors(e)
-    o += '\\' + '\n'
+    o += ', '
     try:
         if e['published']['publisher']:
             o += '%s' % e['published']['publisher']
@@ -62,6 +63,8 @@ def monograph(e):
     try:
         if e['published']['year']:
             o += ' (%s)' % str(e['published']['year'])
+        else:
+            o += ' (%s)' % e['status']
     except KeyError:
         pass
     try:
@@ -77,7 +80,7 @@ def editedcollection(e):
     o = str()
     o += "*%s*" % e['title']
     o += add_coeditors(e)
-    o += '\\' + '\n'
+    o += ', '
     try:
         if e['published']['publisher']:
             o += '%s' % e['published']['publisher']
@@ -91,6 +94,8 @@ def editedcollection(e):
     try:
         if e['published']['year']:
             o += ' (%s)' % str(e['published']['year'])
+        else:
+            o += ' (%s)' % e['status']
     except KeyError:
         pass
     try:
@@ -106,7 +111,7 @@ def specialissue(e):
     o = str()
     o += "%s" % e['title']
     o += add_coeditors(e)
-    o += '\\' + '\n'
+    o += ', '
     try:
         if e['published']['journal']:
             o += '*%s*' % e['published']['journal']
@@ -115,6 +120,8 @@ def specialissue(e):
     try:
         if e['published']['year']:
             o += ' (%s)' % str(e['published']['year'])
+        else:
+            o += ' (%s)' % e['status']
     except KeyError:
         pass
     try:
@@ -133,7 +140,7 @@ def incollection(e):
     elif 'description' in e:
         o += "%s" % e['description']
     o += add_coauthors(e)
-    o += '\\' + '\n'
+    o += ', '
     o += 'in '
     o += add_volumeeditors(e)
     o += ' '
@@ -145,6 +152,8 @@ def incollection(e):
     try:
         if e['published']['year']:
             o += ' (%s)' % str(e['published']['year'])
+        else:
+            o += ' (%s)' % e['status']
     except KeyError:
         pass
     try:
@@ -263,22 +272,4 @@ def add_note(e):
 
 def add_urls(e):
     o = str()
-    o += '\\' + '\n'
-    try:
-        if e['deploy']['url']:
-            o += '[[PDF]](%s)' % e['deploy']['url']
-    except KeyError:
-        pass
-    try:
-        if e['published']['doi']:
-            o += ' '
-            o += '[[DOI]](http://dx.doi.org/%s)' % e['published']['doi']
-    except KeyError:
-        pass
-    try:
-        for u in e['published']['href']:
-            o += ' '
-            o += '[[%s]](%s)' % (u['title'], u['url'])
-    except KeyError:
-        pass
     return o

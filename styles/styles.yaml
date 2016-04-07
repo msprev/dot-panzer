@@ -41,10 +41,12 @@ Article:
         - name: "No author"
           affiliation: "No affiliation"
           email: "no@email"
-        published: "*Rough draft only. Please do not cite without permission.*"
+        published: "No publication info"
+        note: false
+        disclaimer: false
         doi: false
       filter:
-        - run: inject-publication.py
+        - run: metapub.py
   latex:
       template: article.latex
       metadata:
@@ -63,9 +65,17 @@ Article:
       - run: addrefline.py
       - run: pandoc-citeproc
 
+Homepage:
+  parent:
+    - Article
+  latex:
+    postflight:
+      - run: deploy_pdf.py
+      - kill: open_pdf.py
+
 BookReview:
   parent:
-  - Article
+    - Article
   all:
     metadata:
       review:

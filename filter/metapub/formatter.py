@@ -1,3 +1,5 @@
+from util import there
+
 #######################
 #  default formatter  #
 #######################
@@ -13,17 +15,17 @@ def default(e):
 def article(e):
     o = str()
     o += prefix(e)
-    info = e['publication']
-    if 'journal' in info:
+    info = e['published']
+    if there('journal', info):
         o += '*' + info['journal'] + '*'
         o += ' '
-    if 'year' in info:
+    if there('year', info):
         o += '(' + str(info['year']) + ')'
         o += ' '
-    if 'volume' in info:
+    if there('volume', info):
         o +=  str(info['volume'])
         o += ': '
-        if 'pages' in info:
+    if there('pages', info):
             o +=  info['pages']
     o = o.rstrip()
     return o
@@ -31,8 +33,8 @@ def article(e):
 def incollection(e):
     o = str()
     o += prefix(e)
-    info = e['publication']
-    if 'editor' in info:
+    info = e['published']
+    if there('editor', info):
         o += concat_useinitials(info['editor'], ', ', ' & ')
         o += ' '
         if len(info['editor']) > 1:
@@ -40,21 +42,21 @@ def incollection(e):
         else:
             o += '(Ed.)'
         o += ' '
-    if 'booktitle' in info:
+    if there('booktitle', info):
         o += '*' + info['booktitle'] + '*'
+    if there('year', info) and type(info['year']) is int:
         o += ' '
-    if 'year' in info:
         o += '(' + str(info['year']) + ')'
+    if there('address', info):
         o += ', '
-    if 'address' in info:
         o += info['address']
         o += ': '
-    if 'publisher' in info:
+    if there('publisher', info):
         o += info['publisher']
+    if there('pages', info):
         o += ', '
-    if 'pages' in info:
         o += 'pp. ' + info['pages']
-    elif 'chapter' in info:
+    elif there('chapter', info):
         o += 'chapter ' + info['chapter']
     o = o.rstrip()
     o = o.rstrip(',')
@@ -100,6 +102,4 @@ def prefix(e):
             return 'Published in '
         elif e['status'] == 'forthcoming':
             return 'Forthcoming in '
-    else:
-        return '*Rough draft only. Please do not cite without permission.*'
-
+    return 'Final version will appear in '

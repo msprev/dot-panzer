@@ -30,8 +30,9 @@ metapub_file: '/Users/msprevak/Documents/CV/publications.yaml'
 
 import json
 import sys
-from pandocfilters import stringify
 import yaml
+from pandocfilters import stringify
+from util import there
 
 ENCODING = 'utf-8'
 
@@ -68,7 +69,8 @@ def main():
     new = dict()
     add_title(new, entry)
     add_author(new, entry)
-    add_date_finalised(new, entry)
+    add_date_updated(new, entry)
+    add_disclaimer(new, entry)
     add_publication(new, entry)
     add_abstract(new, entry)
     add_keywords(new, entry)
@@ -83,41 +85,48 @@ def main():
     write_ast(ast)
 
 def add_title(new, entry):
-    if 'title' in entry:
+    if there('title', entry):
         new['title'] = entry['title']
 
 def add_author(new, entry):
-    if 'author' in entry:
+    if there('author', entry):
         new['author'] = entry['author']
     for a in new['author']:
         a['name'] = a.get('name_first', '') + ' ' + a.get('name_last', '')
 
-def add_date_finalised(new, entry):
-    if 'date_finalised' in entry:
-        new['date'] = uk_date(entry['date_finalised'])
+def add_date_updated(new, entry):
+    if there('date_updated', entry):
+        new['date'] = uk_date(entry['date_updated'])
+
+def add_disclaimer(new, entry):
+    if there('disclaimer', entry):
+        new['disclaimer'] = entry['disclaimer']
+    elif there('status', entry) and entry['status'] in ['proposed', 'in preparation']:
+        new['disclaimer'] = '*Rough draft only. Please do not cite without permission.*'
 
 def add_publication(new, entry):
     def add_published(new, entry):
         import formatter
-        f = getattr(formatter, entry['publication']['type'], formatter.default)
+        f = getattr(formatter, entry['published']['type'], formatter.default)
         new['published'] = f(entry)
     def add_doi(new, entry):
-        if 'doi' in entry['publication']:
-            new['doi'] = entry['publication']['doi']
-    if 'publication' in entry:
+        if there('doi', entry['published']):
+            new['doi'] = entry['published']['doi']
+    if there('published', entry):
+        add_disclaimer(new, entry)
         add_published(new, entry)
         add_doi(new, entry)
 
 def add_abstract(new, entry):
-    if 'abstract' in entry:
+    if there('abstract', entry):
         new['abstract'] = entry['abstract']
 
 def add_note(new, entry):
-    if 'note' in entry:
+    if there('note', entry):
         new['note'] = entry['note']
 
 def add_keywords(new, entry):
-    if 'keywords' in entry:
+    if there('keywords', entry):
         new['keywords'] = entry['keywords']
 
 def read_ast():

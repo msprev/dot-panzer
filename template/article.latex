@@ -129,6 +129,8 @@ $endif$
 %% \review:       set book review info below title, author, date
 %% \authorblock:  set author & affliations
 \newcommand{\published}[1]{\def\@publicationinfo{#1}}
+\newcommand{\note}[1]{\def\@noteinfo{#1}}
+\newcommand{\disclaimer}[1]{\def\@disclaimerinfo{#1}}
 \newcommand{\doi}[1]{\def\@doiinfo{#1}}
 \newcommand{\review}[1]{\def\@reviewinfo{#1}}
 \newcommand{\authorblock}[1]{\def\@authorblockinfo{#1}}
@@ -225,7 +227,7 @@ $endif$
 
 %% default settings for \title{} and \published{}
 \title{Untitled document}
-\published{\emph{Draft only. Please do not cite without permission.}}
+\published{\emph{No publication info}}
 
 %% Date
 $if(date)$
@@ -255,6 +257,22 @@ $endif$
     \newcommand{\@doiinsert}{\relax}
   \fi
 
+  \ifdefined\@disclaimerinfo
+    \ifblank{\@disclaimerinfo}%
+        {\newcommand{\@disclaimerinsert}{\relax}}%
+        {\newcommand{\@disclaimerinsert}{\@disclaimerinfo\par\vspace{6pt}}}
+  \else
+    \newcommand{\@disclaimerinsert}{\relax}
+  \fi
+
+  \ifdefined\@noteinfo
+    \ifblank{\@noteinfo}%
+        {\newcommand{\@noteinsert}{\relax}}%
+        {\newcommand{\@noteinsert}{\par\vspace{6pt}\@noteinfo}}
+  \else
+    \newcommand{\@noteinsert}{\relax}
+  \fi
+
   %% \@emailbox: email info layout as set by \email{} and \myemail
   \newsavebox{\@emailbox}
   \savebox{\@emailbox}{\parbox[t]{.3\textwidth}{%
@@ -264,7 +282,7 @@ $endif$
   %% \@publicationbox: publication info layout as set by \published{}
   \newsavebox{\@publicationbox}
   \savebox{\@publicationbox}{\parbox[t]{.7\textwidth}{%
-    \footnotesize \strut \@publicationinfo \@doiinsert}%
+          \footnotesize \strut \@disclaimerinsert \@publicationinfo \@doiinsert \@noteinsert}%
   }
 
   %% \@pretitlespace defaults is 5em, but extra space is added
@@ -319,11 +337,17 @@ $else$
 \title{Untitled document}
 $endif$
 
+$if(disclaimer)$
+\disclaimer{$disclaimer$}
+$endif$
 $if(published)$
 \published{$published$}
 $endif$
 $if(doi)$
 \doi{$doi$}
+$endif$
+$if(note)$
+\note{$note$}
 $endif$
 
 $if(review)$
