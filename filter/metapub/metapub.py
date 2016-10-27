@@ -40,7 +40,7 @@ def main():
     """docstring for main"""
     # read input ast
     ast = read_ast()
-    meta = ast[0]['unMeta']
+    meta = ast['meta']
     if 'metapub' not in meta:
         write_ast(ast)
         return
@@ -81,7 +81,7 @@ def main():
     # update using new metadata
     meta.update(incoming)
     # write output ast
-    ast[0]['unMeta'] = meta
+    ast['meta'] = meta
     write_ast(ast)
 
 def add_title(new, entry):
@@ -147,7 +147,7 @@ def generate_meta(incoming_dict):
     yaml_str = yaml.dump(incoming_dict)
     yaml_str_appended = '---\n' + yaml_str + '...\n\n'
     json_str = pandoc.text2json(yaml_str_appended, 'markdown', ['--smart', '--standalone'])
-    return json_str[0]['unMeta']
+    return json_str['meta']
 
 def log(level, msg):
     import os

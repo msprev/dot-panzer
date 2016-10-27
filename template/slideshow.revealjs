@@ -26,14 +26,15 @@ $else$
   <link rel="stylesheet" href="$revealjs-url$/css/theme/black.css" id="theme">
 $endif$
 <style>
-p {
-    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8);
-}
+<!-- p { -->
+<!--     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8); -->
+<!-- } -->
 .reveal h1 { 
     font-size: 1.5em; 
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8);
 }
 .reveal h2 { font-size: 1.2em; }
+.reveal li { margin: 0.5em 0; }
 h1.title { 
     text-transform: none; 
 }

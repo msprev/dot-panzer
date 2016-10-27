@@ -163,8 +163,11 @@ def year(iso_date):
     """
     return year from iso date
     """
-    d = datetime.datetime.strptime(str(iso_date), "%Y-%m-%d")
-    return str(d.year)
+    try:
+        d = datetime.datetime.strptime(str(iso_date), "%Y-%m-%d")
+        return str(d.year)
+    except ValueError:
+        return str(iso_date)
 
 def uk_date(iso_date):
     """

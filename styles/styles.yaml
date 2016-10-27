@@ -200,6 +200,7 @@ Mumford:
       history: 'false'
       controls: 'false'
       progress: 'false'
+      fragments: 'true'
       backgroundTransition: 'fade'
     commandline:
       smart: true
@@ -236,7 +237,7 @@ Letter:
       ps: false
       incl: false
       signed: true      # sign using image below
-      signature: "/Users/msprevak/Documents/Correspondence/Signature.png"
+      signature: "/Users/msprevak/Documents/-resources-/Signature.png"
   latex:
     template: UoE-letter.latex
     metadata:

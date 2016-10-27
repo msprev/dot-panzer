@@ -27,14 +27,14 @@ import panzertools
 def main():
     """docstring for main"""
     ast = json.load(sys.stdin)
-    panzertools.log('INFO', 'tranforming "author" field from list of "name" fields to list of inlines')
+    panzertools.log('INFO', 'transforming "author" field from list of "name" fields to list of inlines')
     try:
-        if ast[0]['unMeta']['author']['t'] == 'MetaList':
+        if ast['meta']['author']['t'] == 'MetaList':
             authors = list()
-            for auth in ast[0]['unMeta']['author']['c']:
+            for auth in ast['meta']['author']['c']:
                 authors.append(dict(auth['c']['name']))
-            ast[0]['unMeta']['author']['t'] = 'MetaList'
-            ast[0]['unMeta']['author']['c'] = authors
+            ast['meta']['author']['t'] = 'MetaList'
+            ast['meta']['author']['c'] = authors
             panzertools.log('INFO', 'done')
     except (KeyError, IndexError):
         panzertools.log('WARNING', '"name" field inside "author" field not found')
