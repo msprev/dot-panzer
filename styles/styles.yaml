@@ -140,7 +140,7 @@ Notes:
   html:
     template: article.html
     metadata:
-      css: "/Users/msprevak/.panzer/template/css/topi.css"
+      css: "/Users/msprevak/.panzer/template/css/momento-pandoc.css"
 
 NotesSans:
   parent:
