@@ -100,8 +100,6 @@ Braindead:
     template: braindead.latex
     metadata:
       fontsize: 12pt
-    commandline:
-      natbib: false
 
 
 Draft:

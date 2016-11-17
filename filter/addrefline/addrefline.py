@@ -19,7 +19,7 @@ def main():
     ast = json.load(sys.stdin)
     panzertools.log('INFO', 'adding "References" section heading')
     try:
-        ast['blocks'].append(Header(1, attributes({'id': 'references'}), [Str('References')]))
+        ast['blocks'].append(Header(1, attributes({'id': 'references', 'classes': ['unnumbered']}), [Str('References')]))
     except (KeyError, IndexError):
         panzertools.log('WARNING', '"name" field inside "author" field not found')
     sys.stdout.write(json.dumps(ast))
