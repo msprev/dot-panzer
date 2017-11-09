@@ -157,23 +157,12 @@ Mumford:
   parent:
   - Base
   latex:
-    template: mumford.latex
+    template: mumford2.latex
     metadata:
       fontsize: 11pt
-  revealjs:
-    template: slideshow.revealjs
-    metadata:
-      theme: white
-      transition: none
-      history: 'false'
-      controls: 'false'
-      progress: 'false'
-      fragments: 'true'
-      backgroundTransition: 'fade'
-    commandline:
-      standalone: true
-      incremental: true
-
+      linkcolor: BlueViolet
+      citecolor: BlueViolet
+      urlcolor: BlueViolet
 
 ##########################################
 #               Letter                   #
