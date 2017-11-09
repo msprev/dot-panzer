@@ -114,8 +114,14 @@ Braindead:
   latex:
     template: braindead.latex
     metadata:
+      fontfamily: txfonts
+      colorlinks: false
       fontsize: 12pt
-
+      geometry:
+        - top=1in
+        - bottom=1in
+        - left=1.25in
+        - right=1.25in
 
 ##########################################
 #                Notes                   #
@@ -157,7 +163,7 @@ Mumford:
   parent:
   - Base
   latex:
-    template: mumford2.latex
+    template: mumford.latex
     metadata:
       fontsize: 11pt
       linkcolor: BlueViolet
