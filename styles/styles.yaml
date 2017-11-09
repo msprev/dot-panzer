@@ -6,18 +6,13 @@ Base:
   all:
       metadata:
         numbersections: true
-        bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
-        metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
+        lang: "en-GB"
+        papersize: a4
       commandline:
-        smart: true
         standalone: true
       filter:
       - run: smallcaps.py
   latex:
-      metadata:
-        lang: british
-        papersize: a4paper
-        biblio-files: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
       preflight:
       - run: tmp_out.py
       postflight:
@@ -27,15 +22,44 @@ Base:
       - run: tmp_back.py
       - run: rmlatex.py
 
+SaveTrees:
+  latex:
+    metadata:
+      fontsize: 10pt
+      geometry:
+        - top=1.5cm
+        - bottom=1.5cm
+
+AddBib:
+  all:
+    metadata:
+      bibliography: "/Users/msprevak/Library/texmf/bibtex/bib/mds-bib/refs.bib"
+  latex:
+    commandline:
+      biblatex: true
+    metadata:
+      biblio-title: "Bibliography"
+      biblio-style: authoryear
+      biblatexoptions:
+        - useprefix
+        - natbib
+        - sortcites
+        - backend=biber
+  html:
+    filter:
+    - run: addrefline.py
+    - run: pandoc-citeproc
+
 ##########################################
 #               Article                  #
 ##########################################
 
-Article:
+Draft:
   parent:
     - Base
   all:
       metadata:
+        metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
         title: "Untitled"
         author:
         - name: "No author"
@@ -51,27 +75,18 @@ Article:
       template: article.latex
       metadata:
         fontsize: 12pt
-      commandline:
-        natbib: true
+        linkcolor: BlueViolet
+        citecolor: BlueViolet
+        urlcolor: BlueViolet
   html:
       template: article.html
       commandline:
         include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
-      filter:
-      - run: addrefline.py
-      - run: pandoc-citeproc
-  docx:
-      filter:
-      - run: addrefline.py
-      - run: pandoc-citeproc
 
-Homepage:
+Article:
   parent:
-    - Article
-  latex:
-    postflight:
-      - run: deploy_pdf.py
-      - kill: open_pdf.py
+    - Draft
+    - AddBib
 
 BookReview:
   parent:
@@ -102,21 +117,6 @@ Braindead:
       fontsize: 12pt
 
 
-Draft:
-  parent: Article
-  latex:
-    metadata:
-      savetrees: true
-      fontsize: 11pt
-    commandline:
-      natbib: false
-
-AddLatexRefs:
-  latex:
-    commandline:
-      natbib: true
-
-
 ##########################################
 #                Notes                   #
 ##########################################
@@ -130,54 +130,24 @@ Notes:
   latex:
     template: notes.latex
     metadata:
-      fontsize: 11pt
-      vert-whitespace: true # looser vertical spacing
-      horiz-whitespace: false # wider horizontal margins
+      sans-style: false     # sans serif headings
       tabbing-digits: false # fixed-size digits
-      sans-style: false   # sans serif style
+      fontsize: 11pt
+      geometry:
+        - top=2.5cm
+        - bottom=3.5cm
+      linkcolor: BlueViolet
+      citecolor: BlueViolet
+      urlcolor: BlueViolet
   html:
     template: article.html
     metadata:
       css: "/Users/msprevak/.panzer/template/css/momento-pandoc.css"
 
-NotesSans:
-  parent:
-  - Notes
+SansHeadings:
   latex:
     metadata:
       sans-style: true
-
-SaveTrees:
-  latex:
-    metadata:
-      vert-whitespace: false
-      fontsize: 10pt
-
-Marking:
-  parent:
-  - Notes
-  all:
-    metadata:
-      numbersections: false
-    filter:
-    - run: paginatesects.py
-
-########################################
-#                  CV                  #
-########################################
-
-CV:
-  parent:
-  - Notes
-  latex:
-    metadata:
-      vert-whitespace: false
-      horiz-whitespace: false
-      fontsize: 10pt
-      include-before:
-      - '\raggedright'
-    postflight:
-    - kill: open_pdf.py
 
 ##########################################
 #               Mumford                  #
@@ -201,7 +171,6 @@ Mumford:
       fragments: 'true'
       backgroundTransition: 'fade'
     commandline:
-      smart: true
       standalone: true
       incremental: true
 
@@ -254,7 +223,4 @@ Plain:
     template:
     filter:
      - run: name2auth.py
-  latex:
-    metadata:
-      geometry: a4paper
 

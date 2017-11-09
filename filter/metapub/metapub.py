@@ -146,7 +146,7 @@ def generate_meta(incoming_dict):
     import pandoc
     yaml_str = yaml.dump(incoming_dict)
     yaml_str_appended = '---\n' + yaml_str + '...\n\n'
-    json_str = pandoc.text2json(yaml_str_appended, 'markdown', ['--smart', '--standalone'])
+    json_str = pandoc.text2json(yaml_str_appended, 'markdown', ['--standalone'])
     return json_str['meta']
 
 def log(level, msg):
