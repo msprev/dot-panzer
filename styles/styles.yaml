@@ -4,27 +4,44 @@
 
 Base:
   all:
-      metadata:
-        numbersections: true
-        lang: "en-GB"
-        papersize: a4
+    metadata:
+      numbersections: true
+      lang: "en-GB"
+      papersize: a4
       commandline:
-        standalone: true
-      filter:
+      standalone: true
+    filter:
       - run: smallcaps.py
   latex:
-      preflight:
+    preflight:
       - run: tmp_out.py
-      postflight:
+    postflight:
       - run: latexmk.py
       - run: open_pdf.py
-      cleanup:
+    cleanup:
       - run: tmp_back.py
       - run: rmlatex.py
   html:
     commandline:
       mathjax: true
 
+######################################################################
+#  Plain style matches pandoc's default look as closely as possible  #
+######################################################################
+
+Plain:
+  parent:
+    - Base
+  all:
+    template:
+    filter:
+       - run: name2auth.py
+
+#####################################
+#  Styles that add extra behaviour  #
+#####################################
+
+# Push text to the edges of the paper to save space
 SaveTrees:
   latex:
     metadata:
@@ -33,6 +50,7 @@ SaveTrees:
         - top=1.5cm
         - bottom=1.5cm
 
+# Add Bibliography to document
 AddBib:
   all:
     metadata:
@@ -50,47 +68,50 @@ AddBib:
         - backend=biber
   html:
     filter:
-    - run: addrefline.py
-    - run: pandoc-citeproc
+      - run: addrefline.py
+      - run: pandoc-citeproc
 
 ##########################################
 #               Article                  #
 ##########################################
 
+# Basic article format without bibliography
 Draft:
   parent:
     - Base
   all:
-      metadata:
-        metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
-        title: "Untitled"
-        author:
+    metadata:
+      metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
+      title: "Untitled"
+      author:
         - name: "No author"
           affiliation: "No affiliation"
           email: "no@email"
-        published: "No publication info"
-        note: false
-        disclaimer: false
-        doi: false
+      published: "No publication info"
+      note: false
+      disclaimer: false
+      doi: false
       filter:
         - run: metapub.py
   latex:
-      template: article.latex
-      metadata:
-        fontsize: 12pt
-        linkcolor: BlueViolet
-        citecolor: BlueViolet
-        urlcolor: BlueViolet
+    template: article.latex
+    metadata:
+      fontsize: 12pt
+      linkcolor: BlueViolet
+      citecolor: BlueViolet
+      urlcolor: BlueViolet
   html:
-      template: article.html
-      commandline:
-        include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
+    template: article.html
+    commandline:
+      include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
 
+# Add the bibliography
 Article:
   parent:
     - Draft
     - AddBib
 
+# It's a book review rather than an article
 BookReview:
   parent:
     - Article
@@ -107,9 +128,10 @@ BookReview:
         price: "No price"
         ISBN: "No ISBN"
 
+# Make the latex PDF come out looking like a MS Word document
 Braindead:
   parent:
-  - Article
+    - Article
   all:
     metadata:
       anonymous: false   # remove author info
@@ -126,16 +148,16 @@ Braindead:
         - left=1.25in
         - right=1.25in
 
-##########################################
-#                Notes                   #
-##########################################
+#############################################
+#  Notes style -- nice for short documents  #
+#############################################
 
 Notes:
   parent:
-  - Base
+    - Base
   all:
     filter:
-    - run: singlelist.py
+      - run: singlelist.py
   latex:
     template: notes.latex
     metadata:
@@ -153,18 +175,21 @@ Notes:
     metadata:
       css: "/Users/msprevak/.panzer/template/css/momento-pandoc.css"
 
+# Variation on the Notes style with sans serif heading titles
 SansHeadings:
   latex:
     metadata:
       sans-style: true
 
-##########################################
-#               Mumford                  #
-##########################################
+
+##################################################################
+#  Produces documents that look like Mumford method ones         #
+#  https://www.nottingham.ac.uk/Arts/Documents/MumfordMethod.pdf #
+##################################################################
 
 Mumford:
   parent:
-  - Base
+    - Base
   latex:
     template: mumford.latex
     metadata:
@@ -173,31 +198,31 @@ Mumford:
       citecolor: BlueViolet
       urlcolor: BlueViolet
 
-##########################################
-#               Letter                   #
-##########################################
+####################################
+#  University of Edinburgh letter  #
+####################################
 
 Letter:
   parent:
-  - Base
+    - Base
   all:
     metadata:
       opening: false
       closing: "Yours sincerely,"
       letterhead:
-        image: "/Users/msprevak/.panzer/template/img/eulogo.pdf"
-        sender: "Dr. Mark Sprevak"
-        role: "Senior Lecturer"
-        affiliation: "SCHOOL *of* PHILOSOPHY, PSYCHOLOGY *and* LANGUAGE SCIENCES"
-        address: |
-          | The University of Edinburgh
-          | Dugald Stewart Building
-          | 3 Charles Street
-          | Edinburgh EH8 9AD
-        phone: "650 3960"
-        switchboard: "650 1000"
-        email: "mark.sprevak@ed.ac.uk"
-        website: "http://sites.google.com/site/msprevak"
+      image: "/Users/msprevak/.panzer/template/img/eulogo.pdf"
+      sender: "Dr. Mark Sprevak"
+      role: "Senior Lecturer"
+      affiliation: "SCHOOL *of* PHILOSOPHY, PSYCHOLOGY *and* LANGUAGE SCIENCES"
+      address: |
+        | The University of Edinburgh
+        | Dugald Stewart Building
+        | 3 Charles Street
+        | Edinburgh EH8 9AD
+      phone: "650 3960"
+      switchboard: "650 1000"
+      email: "mark.sprevak@ed.ac.uk"
+      website: "http://sites.google.com/site/msprevak"
       cc: false
       ps: false
       incl: false
@@ -208,17 +233,5 @@ Letter:
     metadata:
       fontsize: 11pt
     filter:
-    - run: heading2bold.py
-
-##########################################################
-#        Plain, uses pandoc's default template           #
-##########################################################
-
-Plain:
-  parent:
-  - Base
-  all:
-    template:
-    filter:
-     - run: name2auth.py
+      - run: heading2bold.py
 
