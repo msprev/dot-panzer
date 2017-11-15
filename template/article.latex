@@ -417,7 +417,7 @@ $endif$
 \published{\emph{No publication info}}
 
 %% Abstract: minimal quote environment
-\renewenvironment{abstract}{\begin{nsquote}\footnotesize}{\end{nsquote}}
+\renewenvironment{abstract}{\begin{nsquote}\footnotesize}{\end{nsquote} \vspace{1em}}
 
 %% Inserted before \begin{document}
 \AtBeginDocument{
