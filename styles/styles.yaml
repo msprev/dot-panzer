@@ -21,6 +21,9 @@ Base:
       cleanup:
       - run: tmp_back.py
       - run: rmlatex.py
+  html:
+    commandline:
+      mathjax: true
 
 SaveTrees:
   latex:
