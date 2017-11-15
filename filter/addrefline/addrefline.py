@@ -9,19 +9,19 @@ Add extra section heading at end of document:
 import json
 import sys
 import os
-sys.path.append(os.path.join(os.environ['PANZER_SHARED'], 'python'))
-import panzertools
 from pandocfilters import *
 
 
 def main():
     """docstring for main"""
     ast = json.load(sys.stdin)
-    panzertools.log('INFO', 'adding "References" section heading')
+    # panzertools.log('INFO', 'adding "References" section heading')
     try:
-        ast['blocks'].append(Header(1, attributes({'id': 'references', 'classes': ['unnumbered']}), [Str('References')]))
+        ast['meta']['reference-section-title'] = dict()
+        ast['meta']['reference-section-title']['t'] = 'MetaInlines'
+        ast['meta']['reference-section-title']['c'] = [Str('Bibliography')]
     except (KeyError, IndexError):
-        panzertools.log('WARNING', '"name" field inside "author" field not found')
+        pass
     sys.stdout.write(json.dumps(ast))
     sys.stdout.flush()
 

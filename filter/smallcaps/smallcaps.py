@@ -17,8 +17,6 @@ Will transform anything in the list in the document delimited by whitespace or p
 
 import sys
 import os
-sys.path.append(os.path.join(os.environ['PANZER_SHARED'], 'python'))
-import panzertools
 from pandocfilters import toJSONFilter, Str, SmallCaps, stringify
 
 def get_list(meta):
@@ -28,7 +26,6 @@ def get_list(meta):
         try:
             get_list.checked = True
             get_list.hitlist = [stringify(x) for x in meta.get('smallcaps', {})['c']]
-            panzertools.log('INFO', 'small caps: ' + repr(get_list.hitlist))
         except KeyError:
             pass
     return get_list.hitlist
