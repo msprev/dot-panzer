@@ -9,7 +9,7 @@ Base:
       lang: "en-GB"
       papersize: a4
       commandline:
-      standalone: true
+        standalone: true
     filter:
       - run: smallcaps.py
   latex:
