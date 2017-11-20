@@ -170,7 +170,7 @@ $endif$
             breaklinks=true}
 % ---------------------------------------------------------------
 \usepackage{ellipsis}                %% must be loaded after hyperref
-\usepackage[pagestyles]{titlesec}
+\usepackage[pagestyles$if(compact-headings)$,compact$endif$]{titlesec}
 \usepackage{enumitem}
 % \urlstyle{same}  % don't use monospace font for urls
 % ---------------------------------------------------------------

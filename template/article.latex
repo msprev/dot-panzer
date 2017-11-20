@@ -151,7 +151,7 @@ $endif$
 \usepackage{calc}
 \usepackage{enumitem}
 \usepackage{titling}
-\usepackage[small,pagestyles]{titlesec}
+\usepackage[small,pagestyles$if(compact-headings)$,compact$endif$]{titlesec}
 % \urlstyle{same}  % don't use monospace font for urls
 % ---------------------------------------------------------------
 $if(verbatim-in-note)$

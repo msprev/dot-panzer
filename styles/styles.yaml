@@ -46,6 +46,7 @@ SaveTrees:
   latex:
     metadata:
       fontsize: 10pt
+      compact-headings: true
       geometry:
         - top=1.5cm
         - bottom=1.5cm
