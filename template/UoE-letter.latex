@@ -1,6 +1,7 @@
 \documentclass[LFCS,$fontsize$]{infletr}
 
 \usepackage{fixltx2e} % provides \textsubscript
+\usepackage{ifxetex,ifluatex}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 % use upquote if available, for straight quotes in verbatim environments
@@ -13,21 +14,6 @@ $endif$
 \usepackage[defaultlines=3,all]{nowidow}
 \usepackage[babel,verbose=silent]{microtype}
 \usepackage{ellipsis}      %% must be loaded after hyperref
-
-%% [natbib]: use natbib option for biblatex
-$if(natbib)$
-\usepackage[useprefix,
-            authordate,
-            natbib,
-            sortcites,
-            backend=biber]{biblatex-chicago}
-$if(biblio-files)$
-\addbibresource{$biblio-files$}
-$endif$
-\setlength\bibitemsep{6pt}
-\defbibheading{bibliography}[\refname]{\section*{#1} \sectionmark{#1}}
-\defbibheading{references}[\refname]{\section*{#1} \sectionmark{#1}}
-$endif$
 
 $if(lhs)$
 \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
@@ -78,21 +64,6 @@ $endif$
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
-
-%% \signed{...}: flush right, newline when necessary
-%% usage: \signed{\citep{Lewis00}}
-\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
-  \hbox{}\nobreak\hfil#1%
-  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
-
-%% \signedURL{...}: place URL flush right, newline when necessary
-\def\signedURL #1{{\signed{[\url{#1}]}  \vspace{0.5em}}}
-
-% ticks for yes and cross for no
-\newcommand{\tickYes}{\ensuremath{\checkmark}}
-\newcommand{\tickNo}{\ensuremath{\times}}
-\DeclareUnicodeCharacter{2713}{\tickYes}
-\DeclareUnicodeCharacter{2717}{\tickNo}
 
 $for(header-includes)$
 $header-includes$

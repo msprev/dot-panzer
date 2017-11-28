@@ -102,4 +102,4 @@ def prefix(e):
             return 'Published in '
         elif e['status'] == 'forthcoming':
             return 'Forthcoming in '
-    return 'Final version will appear in '
+    return 'Final version due to appear in '
