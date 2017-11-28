@@ -212,19 +212,19 @@ Letter:
       opening: false
       closing: "Yours sincerely,"
       letterhead:
-      image: "/Users/msprevak/.panzer/template/img/eulogo.pdf"
-      sender: "Dr. Mark Sprevak"
-      role: "Senior Lecturer"
-      affiliation: "SCHOOL *of* PHILOSOPHY, PSYCHOLOGY *and* LANGUAGE SCIENCES"
-      address: |
-        | The University of Edinburgh
-        | Dugald Stewart Building
-        | 3 Charles Street
-        | Edinburgh EH8 9AD
-      phone: "650 3960"
-      switchboard: "650 1000"
-      email: "mark.sprevak@ed.ac.uk"
-      website: "http://marksprevak.com/"
+        image: "/Users/msprevak/.panzer/template/img/eulogo.pdf"
+        sender: "Dr. Mark Sprevak"
+        role: "Senior Lecturer"
+        affiliation: "SCHOOL *of* PHILOSOPHY, PSYCHOLOGY *and* LANGUAGE SCIENCES"
+        address: |
+          | The University of Edinburgh
+          | Dugald Stewart Building
+          | 3 Charles Street
+          | Edinburgh EH8 9AD
+        phone: "650 3960"
+        switchboard: "650 1000"
+        email: "mark.sprevak@ed.ac.uk"
+        website: "http://marksprevak.com/"
       cc: false
       ps: false
       incl: false
