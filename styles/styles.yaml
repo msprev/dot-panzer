@@ -21,6 +21,9 @@ Base:
     cleanup:
       - run: tmp_back.py
       - run: rmlatex.py
+    metadata:
+      microtypeoptions:
+        - babel
   html:
     commandline:
       mathjax: true
@@ -234,6 +237,11 @@ Letter:
     template: UoE-letter.latex
     metadata:
       fontsize: 11pt
+      documentclass: infletr
+      classoption:
+        - LFCS
+      fontfamily: txfonts
+      graphics: true
     filter:
       - run: heading2bold.py
 
