@@ -330,6 +330,10 @@ $endif$
 \fax{}
 \email{$letterhead.email$}
 \homepage{$letterhead.website$}
+\letterheadname{$letterhead.name$}
+\letterheadposition{$letterhead.position$}
+\letterheadaffiliation{$letterhead.affiliation$}
+\letterheadaddress{$letterhead.address$}
 
 \begin{letter}{}
 
