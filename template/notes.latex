@@ -381,6 +381,9 @@ $else$
   \begin{center}%
     \let \footnote \thanks
     {\Large\semib{\textssc{\@title}}\par}
+    $if(subtitle)$
+    {\Medium\semib{$subtitle$}\par}
+    $endif$
     $if(author)$
     \vskip 0.1\baselineskip
     \begin{tabular}[t]{c}%

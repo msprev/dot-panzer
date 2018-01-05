@@ -8,7 +8,7 @@ Base:
       numbersections: true
       lang: "en-GB"
       papersize: a4
-      commandline:
+    commandline:
         standalone: true
     filter:
       - run: smallcaps.py
@@ -24,6 +24,23 @@ Base:
     metadata:
       microtypeoptions:
         - babel
+  beamer:
+    preflight:
+      - run: tmp_out.py
+    postflight:
+      - run: latexmk.py
+      - run: open_pdf.py
+    cleanup:
+      - run: tmp_back.py
+      - run: rmlatex.py
+    metadata:
+      microtypeoptions:
+        - babel
+  revealjs:
+    filter:
+       - run: name2auth.py
+    commandline:
+      mathjax: true
   html:
     commandline:
       mathjax: true
