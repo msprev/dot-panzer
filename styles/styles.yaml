@@ -87,7 +87,14 @@ AddBib:
         - natbib
         - sortcites
         - backend=biber
+        - maxbibnames=99
+        - minbibnames=99
   html:
+    metadata:
+      reference-section-title: "Bibliography"
+    filter:
+      - run: pandoc-citeproc
+  docx:
     metadata:
       reference-section-title: "Bibliography"
     filter:
