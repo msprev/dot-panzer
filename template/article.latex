@@ -577,14 +577,6 @@ $if(lof)$
 \listoffigures
 $endif$
 $body$
-
-% ---------------------------------------------------------------
-$if(acknowledgements)$
-\section*{Acknowledgements}
-$acknowledgements$
-$endif$
-% ---------------------------------------------------------------
-
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$

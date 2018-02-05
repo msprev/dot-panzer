@@ -120,8 +120,9 @@ Draft:
       disclaimer: false
       doi: false
       metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
-      filter:
+    filter:
         - run: metapub.py
+        - run: addacks.py
   latex:
     template: article.latex
     metadata:
@@ -162,6 +163,8 @@ Braindead:
   parent:
     - Article
   all:
+    filter:
+      - kill: addacks.py
     metadata:
       anonymous: false   # change to true to remove author info
       endnotes: false    # change to true for endnotes, not footnotes
@@ -187,6 +190,7 @@ Notes:
   all:
     filter:
       - run: singlelist.py
+      - run: addacks.py
   latex:
     template: notes.latex
     metadata:
