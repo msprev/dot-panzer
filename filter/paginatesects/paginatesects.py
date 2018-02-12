@@ -19,10 +19,10 @@ def rehead(key, value, format, meta):
     if key == 'Header' and value[0] == 1:
         if format == 'latex':
             text = '\\newpage\n\\thispagestyle{empty}\n\\setcounter{page}{1}'
-            return [RawInline('latex', text), Header(value[0], value[1], value[2])]
+            return [Para([RawInline('latex', text)]), Header(value[0], value[1], value[2])]
         elif format == 'html':
             text = '<hr>'
-            return [RawInline('html', text), Header(value[0], value[1], value[2])]
+            return [Para([RawInline('latex', text)]), Header(value[0], value[1], value[2])]
 
 if __name__ == "__main__":
     panzertools.log('INFO', 'adding page break before each H1 section')
