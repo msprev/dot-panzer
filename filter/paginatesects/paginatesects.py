@@ -22,7 +22,7 @@ def rehead(key, value, format, meta):
             return [Para([RawInline('latex', text)]), Header(value[0], value[1], value[2])]
         elif format == 'html':
             text = '<hr>'
-            return [Para([RawInline('latex', text)]), Header(value[0], value[1], value[2])]
+            return [Para([RawInline('html', text)]), Header(value[0], value[1], value[2])]
 
 if __name__ == "__main__":
     panzertools.log('INFO', 'adding page break before each H1 section')
