@@ -37,6 +37,11 @@ Base:
       microtypeoptions:
         - babel
   revealjs:
+    metadata:
+      transition: "none"
+      progress: "false"
+      history: "false"
+    template: revealjs.html
     filter:
        - run: name2auth.py
     commandline:
@@ -134,6 +139,13 @@ Draft:
     template: article.html
     commandline:
       include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
+  docx:
+    lua-filter:
+        - run: linebreakbetweenparas.lua
+    commandline:
+      reference-doc: "`/Users/msprevak/.panzer/template/reference-doc/article.docx`"
+      csl: "`/Users/msprevak/.panzer/template/csl/oxford-university-press-humsoc.csl`"
+
 
 # Add the bibliography
 Article:
