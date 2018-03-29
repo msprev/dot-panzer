@@ -40,7 +40,11 @@ Base:
     metadata:
       transition: "none"
       progress: "false"
-      history: "false"
+      controls: "false"
+      header-includes: |
+        <style type="text/css">
+          img{border: none !important;} 
+        </style>
     template: revealjs.html
     filter:
        - run: name2auth.py
@@ -226,6 +230,22 @@ SansHeadings:
     metadata:
       sans-style: true
 
+# This document is a presentation
+Presentation:
+  all:
+    metadata:
+      numbersections: false
+  html:
+    lua-filter:
+      - run: remove-presentation-markup.lua
+      - run: remove-tt.lua
+  latex:
+    metadata:
+      include-before:
+        - "\\small"
+    lua-filter:
+      - run: remove-presentation-markup.lua
+      - run: notes-to-callout.lua
 
 ##################################################################
 #  Produces documents that look like Mumford method ones         #

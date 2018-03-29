@@ -5,6 +5,9 @@ $if(colorlinks)$
 $endif$
 %
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+% ---------------------------------------------------------------
+\usepackage[framemethod=TikZ]{mdframed}
+% ---------------------------------------------------------------
 $if(beamer)$
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
@@ -330,6 +333,15 @@ $if(dir)$
 $endif$
 
 % ---------------------------------------------------------------
+%% call out boxes
+\newenvironment{callout}{%
+\mdfsetup{innertopmargin=\topskip,%
+innerbottommargin=\topskip,%
+linecolor=blue!20,%
+linewidth=2pt,topline=true}
+\begin{mdframed}[] \relax \normalsize %
+}{\end{mdframed}}
+
 %% Description labels: bold, small caps, and enforced lowercase
 \renewcommand{\descriptionlabel}[1]{\hspace*{\labelsep}\textsc{\textbf{\MakeLowercase{#1}}}}
 
