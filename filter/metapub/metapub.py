@@ -75,6 +75,7 @@ def main():
     add_abstract(new, entry)
     add_keywords(new, entry)
     add_note(new, entry)
+    add_review(new, entry)
     # convert new metadata to pandoc's ast metadata format
     log('DEBUG', 'new metadata: ' + str(new))
     incoming = generate_meta(new)
@@ -128,6 +129,10 @@ def add_note(new, entry):
 def add_keywords(new, entry):
     if there('keywords', entry):
         new['keywords'] = entry['keywords']
+
+def add_review(new, entry):
+    if there('review', entry):
+        new['review'] = entry['review']
 
 def read_ast():
     log('DEBUG', 'reading ast')

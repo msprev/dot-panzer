@@ -12,7 +12,11 @@ function Para(elem)
 end
 
 function Image(elem)
-    return {}
+    if elem.classes[1] == "handout" then
+        return elem
+    else
+        return {}
+    end
 end
 
 function Header(elem)
