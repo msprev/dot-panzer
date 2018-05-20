@@ -102,7 +102,7 @@ def add_date_updated(new, entry):
 def add_disclaimer(new, entry):
     if there('disclaimer', entry):
         new['disclaimer'] = entry['disclaimer']
-    elif there('status', entry) and entry['status'] in ['proposed', 'in preparation']:
+    elif there('status', entry) and entry['status'] in ['proposed', 'in preparation', 'forthcoming']:
         new['disclaimer'] = '*Draft only. Do not cite without permission.*'
 
 def add_publication(new, entry):
