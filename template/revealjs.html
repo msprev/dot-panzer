@@ -67,17 +67,18 @@ $endfor$
 $if(title)$
 <!-- -------------------------------------- -->
 <section id="$idprefix$title-slide" $if(title-background-image)$data-background-image="$title-background-image$"$endif$>
-<!-- -------------------------------------- -->
-  <h1 class="title">$title$</h1>
+  <h1 class="title" style="text-shadow: -3px 5px 10px rgba(46, 74, 148, 0.2)">$title$</h1>
 $if(subtitle)$
   <p class="subtitle">$subtitle$</p>
 $endif$
 $for(author)$
-  <p class="author">$author$</p>
+  <p class="author" style="line-height:1.1; margin: 140px 150px 0px 150px; padding: 30px 0px; background: rgba(0, 0, 0, 0.1);">
+      $author.name$
+      $if(author.affiliation)$<br><span style="font-size:75%">$author.affiliation$</span>$endif$
+      $if(author.website)$<br><a href="$author.website$" class="uri" style="font-size:75%">$author.website$</a>$endif$
+  </p>
 $endfor$
-$if(date)$
-  <p class="date">$date$</p>
-$endif$
+<!-- -------------------------------------- -->
 </section>
 $endif$
 $if(toc)$

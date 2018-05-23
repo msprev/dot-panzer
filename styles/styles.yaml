@@ -46,8 +46,6 @@ Base:
           img{border: none !important;} 
         </style>
     template: revealjs.html
-    filter:
-       - run: name2auth.py
     commandline:
       mathjax: true
   html:
