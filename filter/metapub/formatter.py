@@ -101,5 +101,5 @@ def prefix(e):
         if e['status'] == 'published':
             return 'Published in '
         elif e['status'] == 'forthcoming':
-            return 'Forthcoming in '
+            return 'Final version due to appear in '
     return 'Final version due to appear in '
