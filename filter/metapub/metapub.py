@@ -103,7 +103,7 @@ def add_disclaimer(new, entry):
     if there('disclaimer', entry):
         new['disclaimer'] = entry['disclaimer']
     elif there('status', entry) and entry['status'] in ['proposed', 'in preparation', 'forthcoming']:
-        new['disclaimer'] = '*Draft only. Do not cite without permission.*'
+        new['disclaimer'] = '*Draft only. Do not quote without permission.*'
 
 def add_publication(new, entry):
     def add_published(new, entry):

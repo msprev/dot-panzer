@@ -20,19 +20,6 @@ $endif$
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
-\usepackage{lmodern}
-$endif$
-$if(linestretch)$
-\usepackage{setspace}
-\setstretch{$linestretch$}
-$endif$
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
   % ---------------------------------------------------------------
   % Use MinionPro font if available, otherwise use lmodern
   \IfFileExists{MinionPro.sty}{%
@@ -57,6 +44,18 @@ $endif$
   \def\ebold#1{{\fontseries{eb}\selectfont #1}}
   \def\semib#1{{\fontseries{sb}\selectfont #1}}
   % ---------------------------------------------------------------
+$endif$
+$if(linestretch)$
+\usepackage{setspace}
+\setstretch{$linestretch$}
+$endif$
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
 $if(mathspec)$
   \ifxetex

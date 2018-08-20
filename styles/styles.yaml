@@ -126,7 +126,7 @@ Draft:
       note: false
       disclaimer: false
       doi: false
-      metapub_file: "/Users/msprevak/Documents/CV/publications.yaml"
+      metapub_file: "/Users/msprevak/Dropbox/msprevak/docs/CV/publications.yaml"
     filter:
         - run: metapub.py
         - run: addacks.py
@@ -289,7 +289,7 @@ Letter:
       ps: false
       incl: false
       signed: true      # sign using image below
-      signature: "/Users/msprevak/Documents/-resources-/Signature.png"
+      signature: "/Users/msprevak/Dropbox/msprevak/docs/-resources-/Signature.png"
   latex:
     template: UoE-letter.latex
     metadata:
