@@ -342,6 +342,7 @@
       </group>
       <text macro="access" prefix=". "/>
       <text variable="DOI" prefix=". DOI: "/>
+      <text variable="annote" display="left-margin"/>
     </layout>
   </bibliography>
 </style>

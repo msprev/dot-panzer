@@ -140,11 +140,14 @@ Draft:
   html:
     template: article.html
     commandline:
+      number-sections: true
       include-in-header: "`/Users/msprevak/.panzer/template/css/momento-pandoc.css`"
+      csl: "`/Users/msprevak/.panzer/template/csl/oxford-university-press-humsoc.csl`"
   docx:
     lua-filter:
         - run: linebreakbetweenparas.lua
     commandline:
+      number-sections: true
       reference-doc: "`/Users/msprevak/.panzer/template/reference-doc/article.docx`"
       csl: "`/Users/msprevak/.panzer/template/csl/oxford-university-press-humsoc.csl`"
 

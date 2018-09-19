@@ -193,6 +193,16 @@ $if(biblatex)$
 \usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
 % ---------------------------------------------------------------
 \setlength\bibitemsep{6pt}
+% map fields 'annote' -> 'addendum' for annotated bibliographies in biblatex
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=annote, final]
+      \step[fieldset=addendum, origfieldval, final]
+      \step[fieldset=annote, null]
+    }
+  }
+}
 % ---------------------------------------------------------------
 $for(bibliography)$
 \addbibresource{$bibliography$}
