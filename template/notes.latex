@@ -20,6 +20,18 @@ $endif$
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
+$endif$
+$if(linestretch)$
+\usepackage{setspace}
+\setstretch{$linestretch$}
+$endif$
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
   % ---------------------------------------------------------------
   % Use MinionPro font if available, otherwise use lmodern
   \IfFileExists{MinionPro.sty}{%
@@ -33,29 +45,7 @@ $else$
       \usepackage[medfamily]{MyriadPro}}{\usepackage{lmodern}}
   $endif$
   \IfFileExists{inconsolata.sty}{\usepackage[scaled=0.85]{inconsolata}}{}
-  \DeclareFontShape{T1}{MinionPro-OsF}{mb}{n}{
-    <-> MinionPro-Medium-osf-t1
-  }{}
-  \DeclareFontShape{T1}{MinionPro-OsF}{mb}{it}{
-    <-> MinionPro-MediumIt-osf-t1
-  }{}
-  \renewcommand*{\bfdefault}{eb}
-  \def\medw#1{{\fontseries{mb}\selectfont #1}}
-  \def\ebold#1{{\fontseries{eb}\selectfont #1}}
-  \def\semib#1{{\fontseries{sb}\selectfont #1}}
   % ---------------------------------------------------------------
-$endif$
-$if(linestretch)$
-\usepackage{setspace}
-\setstretch{$linestretch$}
-$endif$
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
 $if(mathspec)$
   \ifxetex
@@ -401,9 +391,9 @@ $else$
   \null
   \begin{center}%
     \let \footnote \thanks
-    {\Large\semib{\textssc{\@title}}\par}
+    {\Large \textbf{\textssc{\@title}}\par}
     $if(subtitle)$
-    {\Medium\semib{$subtitle$}\par}
+    {\Medium \textbf{$subtitle$}\par}
     $endif$
     $if(author)$
     \vskip 0.1\baselineskip

@@ -1,11 +1,12 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
 """
 Add my bibliography file to metadata
 """
-#!/usr/bin/env python3
 
 import json
 import sys
-import os
 from pandocfilters import *
 
 BIB = "/Users/msprevak/Dropbox/msprevak/-library-/texmf/bibtex/bib/mds-bib/refs.bib"

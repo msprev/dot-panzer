@@ -15,7 +15,7 @@ import panzertools
 # -pdf: write pdf output
 # -pdflatex: command to pass to pdflatex
 
-LATEXMK_OPTS = ['-f', '-silent', '-pdf']
+LATEXMK_OPTS = ['-f', '-pdf']
 
 def run_latexmk(filepath):
     """docstring for run_latexmk"""
